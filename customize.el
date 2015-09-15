@@ -17,3 +17,7 @@
  '(helm-selection ((t (:background "gray" :foreground "black"))))
  '(helm-source-header ((t (:background "color-233" :foreground "green" :weight bold))))
  '(helm-visible-mark ((t (:background "brightred" :foreground "white")))))
+
+;; open zsh scripts with syntax highlighting
+(add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\gitconfig\\'" . sh-mode))

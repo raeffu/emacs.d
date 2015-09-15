@@ -206,6 +206,9 @@
 (global-set-key (kbd "C-x M-l") 'magit-log)
 (global-set-key (kbd "C-x M-b") 'magit-blame)
 
+;; tmux
+(global-unset-key (kbd "C-q")) ; quoted-insert
+
 ;; swap `transpose-chars' key with `transpose-lines'
 (global-set-key "\C-t" #'transpose-lines)
 (define-key ctl-x-map "\C-t" #'transpose-chars)

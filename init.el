@@ -2,13 +2,17 @@
 
 ;;; Commentary:
 ;;
+;;(setq mac-option-key-is-meta nil)
+;;(setq mac-command-key-is-meta t)
+;;(setq mac-command-modifier 'meta)
+;;(setq mac-option-modifier nil)
 
 ;;; Code:
 
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-(require 'cask "/usr/local/share/emacs/site-lisp/cask.el")
+(require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el")
 (cask-initialize)
 
 (require 'pallet)
@@ -24,12 +28,12 @@
 (require 'system-prt)
 (require 'display-prt)
 (require 'ruby-prt)
-(require 'elixir-prt)
-(require 'emacs-lisp-prt)
+;;(require 'elixir-prt)
+;;(require 'emacs-lisp-prt)
 (require 'js-prt)
 (require 'coffee-prt)
 (require 'yasnippet-prt)
-(require 'which-key-prt)
+;; (require 'which-key-prt)
 (require 'utils-prt)
 (require 'writer-prt)
 (require 'custom-prt)
