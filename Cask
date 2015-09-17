@@ -3,6 +3,7 @@
 (source org)
 
 (depends-on "ack")
+(depends-on "ag")
 (depends-on "browse-kill-ring")
 (depends-on "cask")
 (depends-on "coffee-mode")
