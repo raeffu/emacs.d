@@ -23,5 +23,6 @@
 
 ;; open zsh scripts with syntax highlighting
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\zshrc\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\gitconfig\\'" . sh-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . sass-mode))

@@ -40,6 +40,7 @@
 (require 'org-prt)
 (require 'dired-prt)
 (require 'grep-prt)
+(require 'ace-prt)
 (require 'keybindings-prt)
 (require 'helm-prt)
 (require 'html-prt)

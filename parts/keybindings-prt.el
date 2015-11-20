@@ -192,6 +192,7 @@
 (global-set-key (kbd "C-h f") 'helm-apropos)
 (global-set-key (kbd "C-h r") 'helm-info-emacs)
 (global-set-key (kbd "C-h C-l") 'helm-locate-library)
+(global-set-key (kbd "C-h C-b") 'helm-descbinds)
 (global-set-key (kbd "M-w") 'helm-imenu)
 (global-set-key (kbd "C-o") 'helm-find-files)
 (global-set-key (kbd "M-g a") 'helm-projectile-ag)
