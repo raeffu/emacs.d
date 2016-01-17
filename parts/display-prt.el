@@ -28,7 +28,7 @@
 (setq default-cursor-type 'box)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-(load-theme 'ujelly t)
+(load-theme 'tonini t)
 
 (defvar mode-line-cleaner-alist
   `((eldoc-mode . "")

@@ -4,6 +4,8 @@
 
 (depends-on "ack")
 (depends-on "ag")
+(depends-on "atom-dark-theme")
+(depends-on "atom-one-dark-theme")
 (depends-on "browse-kill-ring")
 (depends-on "cask")
 (depends-on "coffee-mode")
