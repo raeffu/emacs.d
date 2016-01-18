@@ -78,7 +78,7 @@
  '(font-lock-warning-face ((t (:foreground "#FFFFFF" ':background "#333333"))))
  '(fringe ((t (:background "#232526"))))
  '(highlight ((t (:foreground "#000000" :background "#25292b"))))
- '(hl-line ((t (:background "#25292b" :inherit nil))))
+ '(hl-line ((t (:background "#3b4144" :inherit nil))))
  '(col-highlight ((t (:background "#25292b" :inherit nil))))
  '(icompletep-choices ((t (:foreground "#F92672"))))
  '(icompletep-determined ((t (:foreground "#A6E22E"))))
