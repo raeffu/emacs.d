@@ -195,7 +195,8 @@
 (global-set-key (kbd "C-h C-b") 'helm-descbinds)
 (global-set-key (kbd "M-w") 'helm-imenu)
 (global-set-key (kbd "C-o") 'helm-find-files)
-(global-set-key (kbd "M-g a") 'helm-projectile-ag)
+;; (global-set-key (kbd "M-g a") 'helm-projectile-ag)
+(global-set-key (kbd "M-g a") 'ag)
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 

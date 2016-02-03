@@ -42,7 +42,7 @@
  '(custom-face-tag ((t (:foreground "#66D9EF" :weight bold))))
  '(custom-state ((t (:foreground "#A6E22E"))))
  '(italic ((t (:slant italic))))
- '(region ((t (:background "#313131"))))
+ '(region ((t (:background "#007f80"))))
  '(underline ((t (:underline t))))
  '(css-selector ((t (:foreground "#F92672"))))
  '(css-property ((t (:foreground "#66D9EF"))))
