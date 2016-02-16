@@ -3,7 +3,7 @@
 (require 'zoom-window)
 
 ;; zoom-window configuration
-(setq zoom-window-mode-line-color "DarkGreen")
+(setq zoom-window-mode-line-color "magenta4")
 
 (setq-default truncate-lines t)
 (setq visible-bell nil)
@@ -83,7 +83,7 @@ want to use in the modeline *in lieu of* the original.")
 ;; Smartparens faces
 ;;
 ;; - disable pair overlay for readability
-(setq sp-highlight-pair-overlay nil)
+;; (setq sp-highlight-pair-overlay nil)
 
 ;; Flycheck faces
 ;;

@@ -26,7 +26,8 @@
  '(magit-diff-added ((t (:background "black" :foreground "#BCDB00"))))
  '(magit-diff-added-highlight ((t (:background "black" :foreground "#BCDB00"))))
  '(magit-diff-removed ((t (:background "black" :foreground "color-198"))))
- '(magit-diff-removed-highlight ((t (:background "black" :foreground "color-198")))))
+ '(magit-diff-removed-highlight ((t (:background "black" :foreground "color-198"))))
+ '(sp-show-pair-match-face ((t (:background "DarkOrange" :foreground "black")))))
 
 ;; open zsh scripts with syntax highlighting
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
