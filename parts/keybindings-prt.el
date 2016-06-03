@@ -39,11 +39,13 @@
 
 (global-unset-key (kbd "C-x 1")) ; delete-other-windows
 (global-unset-key (kbd "C-x 0")) ; delete-window
+(global-unset-key (kbd "M-8")) ; digit-argument
 (global-set-key (kbd "M-0") 'delete-window)
 (global-set-key (kbd "M-2") 'split-window-vertically)
 (global-set-key (kbd "M-3") 'split-window-horizontally)
 (global-set-key (kbd "M-4") 'balance-windows)
 (global-set-key (kbd "M-9") 'delete-other-windows)
+(global-set-key (kbd "M-8") 'delete-other-windows-vertically)
 (global-set-key (kbd "M-+") 'balance-windows)
 
 ;; Zoom-Window
@@ -92,6 +94,7 @@
 (global-unset-key (kbd "C-M-r")) ;; isearch-backwards
 (global-set-key (kbd "C-f") 'isearch-forward-regexp)
 (global-set-key (kbd "C-*") 'isearch-forward-at-point)
+(global-set-key (kbd "C-q") 'quoted-insert)
 
 (global-set-key (kbd "C-c r") 'revert-buffer)
 

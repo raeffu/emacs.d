@@ -1,5 +1,5 @@
 ;; Use bin/bash as default shell for Emacs to work around PATH issues with zsh
-(setq shell-file-name "/usr/local/bin/zsh")
+(setq shell-file-name "/bin/bash")
 
 (setq-default indent-tabs-mode nil)
 

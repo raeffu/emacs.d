@@ -44,6 +44,7 @@
 (require 'keybindings-prt)
 (require 'helm-prt)
 (require 'html-prt)
+;; (require 'c-prt)
 
 (provide 'init)
 
