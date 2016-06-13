@@ -3,7 +3,7 @@
 (require 'zoom-window)
 
 ;; zoom-window configuration
-(setq zoom-window-mode-line-color "red")
+(setq zoom-window-mode-line-color "color-51")
 
 (setq-default truncate-lines t)
 (setq visible-bell nil)
