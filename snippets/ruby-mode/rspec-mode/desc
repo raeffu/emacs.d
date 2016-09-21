@@ -1,0 +1,7 @@
+#name : describe
+# key: desc
+# contributor: Raphael Laubscher
+# --
+describe "$1" do
+  $0
+end
