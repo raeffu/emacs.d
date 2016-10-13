@@ -35,4 +35,5 @@
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
   (add-hook hook 'turn-on-elisp-slime-nav-mode))
 
-(provide 'emacs-lisp-prt)
+(provide 'raeffu-emacs-lisp)
+;;; raeffu-emacs-lisp.el ends here

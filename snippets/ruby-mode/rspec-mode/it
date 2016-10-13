@@ -1,6 +1,6 @@
 #name: it
 # key: it
-# contributor: Samuel Tonini
+# contributor: Raphael Laubscher
 # --
 it '$1' do
   $0

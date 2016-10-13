@@ -3,7 +3,7 @@
 (require 'zoom-window)
 
 ;; zoom-window configuration
-(setq zoom-window-mode-line-color "color-51")
+(setq zoom-window-mode-line-color "DarkGreen")
 
 (setq-default truncate-lines t)
 (setq visible-bell nil)
@@ -28,8 +28,7 @@
 (setq default-cursor-type 'box)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized/")
-(load-theme 'solarized t)
+(load-theme 'ujelly t)
 
 (defvar mode-line-cleaner-alist
   `((eldoc-mode . "")
@@ -84,7 +83,7 @@ want to use in the modeline *in lieu of* the original.")
 ;; Smartparens faces
 ;;
 ;; - disable pair overlay for readability
-;; (setq sp-highlight-pair-overlay nil)
+(setq sp-highlight-pair-overlay nil)
 
 ;; Flycheck faces
 ;;
@@ -96,4 +95,4 @@ want to use in the modeline *in lieu of* the original.")
     '(progn
       (set-face-attribute 'flycheck-warning nil :foreground "yellow" :underline nil)))
 
-(provide 'display-prt)
+(provide 'raeffu-display-prt)

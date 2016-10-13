@@ -113,6 +113,7 @@
 (global-set-key (kbd "C-M-j")  'textmate-shift-left)
 (global-set-key (kbd "C-c C-w") 'whitespace-mode)
 
+(global-unset-key (kbd "M-t"))
 (global-set-key (kbd "M-t") 'projectile-find-file)
 
 (global-set-key (kbd "C-c c") 'org-capture)
@@ -200,7 +201,7 @@
 (global-set-key (kbd "C-o") 'helm-find-files)
 ;; (global-set-key (kbd "M-g a") 'helm-projectile-ag)
 (global-set-key (kbd "M-g a") 'ag)
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
+;;(global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 
 (define-key process-menu-mode-map (kbd "C-k") 't-delete-process-at-point)
@@ -218,4 +219,4 @@
 (global-set-key "\C-t" #'transpose-lines)
 (define-key ctl-x-map "\C-t" #'transpose-chars)
 
-(provide 'keybindings-prt)
+(provide 'raeffu-keybindings)
