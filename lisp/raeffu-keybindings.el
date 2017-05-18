@@ -1,3 +1,10 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+
+(require 'bind-key)
+
+(global-unset-key (kbd "C-x C-x")) ; unbind shit that stops me from saving
 (global-unset-key (kbd "C-b")) ; backward-char
 (global-unset-key (kbd "C-f")) ; forward-char
 (global-unset-key (kbd "C-p")) ; previous-line
@@ -187,7 +194,8 @@
 (global-set-key (kbd "M-e s") 'tester-run-test-suite)
 
 ;; Helm
-(global-set-key (kbd "M-a") 'helm-M-x)
+(bind-keys*
+ ("M-a" . helm-M-x))
 (global-set-key (kbd "C-x C-m") 'helm-M-x)
 (global-set-key (kbd "M-R") 'helm-show-kill-ring)
 (global-set-key (kbd "C-x b") 'helm-mini)
@@ -220,3 +228,4 @@
 (define-key ctl-x-map "\C-t" #'transpose-chars)
 
 (provide 'raeffu-keybindings)
+;;; raeffu-keybindings.el ends here

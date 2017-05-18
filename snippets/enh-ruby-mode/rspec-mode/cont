@@ -1,7 +1,7 @@
-#name: it
-# key: it
+# name : context
+# key: cont
 # contributor: Raphael Laubscher
 # --
-it '$1' do
+context '$1' do
   $0
 end

@@ -80,8 +80,9 @@
 ;; which is rather pointless.
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
+;; show menu bar
 (when (and (eq system-type 'darwin) (fboundp 'menu-bar-mode))
-  (menu-bar-mode -1))
+  (menu-bar-mode 1))
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
@@ -96,7 +97,8 @@
       inhibit-startup-screen t
       echo-keystrokes 0.1
       linum-format " %d"
-      initial-scratch-message "Howdy Partner!\n")
+      initial-scratch-message "Howdy Partner!")
+
 (fset 'yes-or-no-p #'y-or-n-p)
 ;; Opt out from the startup message in the echo area by simply disabling this
 ;; ridiculously bizarre thing entirely.
@@ -120,7 +122,7 @@
 (use-package solarized-theme
   :ensure t
   :defer t
-  :init (load-theme 'solarized-dark t)
+  :init (load-theme 'solarized-light t)
   :config
   ;; make the fringe stand out from the background
   (setq solarized-distinct-fringe-background t)
@@ -232,7 +234,7 @@
 	  company-tooltip-minimum-width 27
 	  company-idle-delay 0.3
 	  company-tooltip-limit 10
-	  company-minimum-prefix-length 2
+	  company-minimum-prefix-length 4
 	  company-tooltip-flip-when-above t
 	  company-dabbrev-downcase nil
 	  company-dabbrev-ignore-case nil))
@@ -252,6 +254,7 @@
 
 (use-package helm-core
   :ensure t)
+
 (use-package helm
   :ensure t
   :bind (("M-a" . helm-M-x)
@@ -259,7 +262,8 @@
          ("C-x f" . helm-recentf)
          ("C-SPC" . helm-dabbrev)
          ("M-y" . helm-show-kill-ring)
-         ("C-x b" . helm-buffers-list))
+         ("C-x b" . helm-buffers-list)
+         ("C-c b" . helm-resume))
   :bind (:map helm-map
               ("M-i" . helm-previous-line)
               ("M-k" . helm-next-line)
@@ -420,14 +424,6 @@ Has no effect when `persp-show-modestring' is nil."
   :config
   (zoom-window-setup))
 
-(use-package yasnippet
-  :ensure t
-  :defer t
-  :config
-  (setq yas-snippet-dirs "~/.emacs.d/snippets")
-  (yas-global-mode 1)
-  :diminish (yas-minor-mode . " YS"))
-
 (use-package enh-ruby-mode
   :ensure t
   :defer t
@@ -463,6 +459,14 @@ Has no effect when `persp-show-modestring' is nil."
             (add-hook 'enh-ruby-mode-hook 'rspec-ruby-mode-hook))
   :bind (("C-c , s" . rspec-verify-single)
          ("C-c , v" . rspec-verify)))
+
+(use-package yasnippet
+  :ensure t
+  :defer t
+  :config
+  (setq yas-snippet-dirs "~/.emacs.d/snippets")
+  (yas-global-mode 1)
+  :diminish (yas-minor-mode . " YS"))
 
 (use-package rbenv
   :ensure t
@@ -562,6 +566,18 @@ Has no effect when `persp-show-modestring' is nil."
 (use-package ert
   :after elisp-mode)
 
+(use-package web-mode
+  :ensure t
+  :mode (("\\.erb\\'" . web-mode)
+         ("\\.mustache\\'" . web-mode)
+         ("\\.html?\\'" . web-mode)
+         ("\\.eex\\'" . web-mode)
+         ("\\.php\\'" . web-mode))
+  :config (progn
+            (setq web-mode-markup-indent-offset 2
+                  web-mode-css-indent-offset 2
+                  web-mode-code-indent-offset 2)))
+
 (use-package js2-mode
   :ensure t
   :mode (("\\.js\\'" . js2-mode)
@@ -602,8 +618,9 @@ Has no effect when `persp-show-modestring' is nil."
 
 (use-package drag-stuff
   :ensure t
-  :bind (("M-<up>" . drag-stuff-up)
-         ("M-<down>" . drag-stuff-down)))
+  :config (progn
+	  (drag-stuff-define-keys)
+	  (drag-stuff-global-mode 1)))
 
 (use-package magit
   :ensure t
@@ -616,18 +633,6 @@ Has no effect when `persp-show-modestring' is nil."
 (use-package yaml-mode
   :ensure t
   :mode ("\\.ya?ml\\'" . yaml-mode))
-
-(use-package web-mode
-  :ensure t
-  :mode (("\\.erb\\'" . web-mode)
-         ("\\.mustache\\'" . web-mode)
-         ("\\.html?\\'" . web-mode)
-         ("\\.eex\\'" . web-mode)
-         ("\\.php\\'" . web-mode))
-  :config (progn
-            (setq web-mode-markup-indent-offset 2
-                  web-mode-css-indent-offset 2
-                  web-mode-code-indent-offset 2)))
 
 (use-package emmet-mode
   :ensure t
@@ -662,7 +667,33 @@ Has no effect when `persp-show-modestring' is nil."
 
 (use-package nyan-mode
   :ensure t
-  :config (nyan-mode 1))
+  :config (progn
+	    (nyan-mode 1)
+	    (nyan-start-animation)
+	    (nyan-toggle-wavy-trail)))
+
+(use-package matlab-mode
+  :ensure t)
+
+(use-package ess
+  :ensure t)
+
+(use-package diff
+  :bind (:map diff-mode-map
+	      ("M-k" . next-line)
+	      ("M-o" . forward-word)))
+
+(use-package haml-mode
+  :ensure t
+  :bind ("C-c C-k" . t-comment-or-uncomment-region-or-line))
+
+(use-package cmake-mode
+  :ensure t
+  :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
+
+(use-package prolog
+  :ensure t
+  :mode ("\\.pl" . prolog-mode))
 
 (provide 'init)
 
