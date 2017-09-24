@@ -41,6 +41,8 @@
 
 (global-unset-key (kbd "M-<")) ; beginning-of-buffer
 (global-unset-key (kbd "M->")) ; end-of-buffer
+(global-unset-key (kbd "M-h"))
+(global-unset-key (kbd "M-H"))
 (global-set-key (kbd "M-h") 'beginning-of-buffer)
 (global-set-key (kbd "M-H") 'end-of-buffer)
 
@@ -221,7 +223,7 @@
 (global-set-key (kbd "C-x M-b") 'magit-blame)
 
 ;; tmux
-(global-unset-key (kbd "C-q")) ; quoted-insert
+;; (global-unset-key (kbd "C-q")) ; quoted-insert
 
 ;; swap `transpose-chars' key with `transpose-lines'
 (global-set-key "\C-t" #'transpose-lines)
