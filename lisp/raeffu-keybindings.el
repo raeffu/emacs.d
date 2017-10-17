@@ -12,6 +12,7 @@
 (global-unset-key (kbd "C-M-i"))
 (global-set-key (kbd "M-j") 'backward-char)
 (global-set-key (kbd "M-l") 'forward-char)
+(global-unset-key (kbd "M-i")) ; helm-multi-swoop-all-from-helm-swoop
 (global-set-key (kbd "M-i") 'previous-line)
 (global-set-key (kbd "M-I") 'scroll-down)
 (global-set-key (kbd "M-k") 'next-line)
@@ -70,7 +71,8 @@
 (global-set-key (kbd "C-d") 'windmove-right)
 (global-set-key (kbd "C-s") 'windmove-down)
 (global-set-key (kbd "C-a") 'windmove-left)
-(global-set-key (kbd "C-w") 'windmove-up)
+(bind-keys*
+ ("C-w" . windmove-up))
 
 (global-unset-key (kbd "C-/")) ; undo
 (global-unset-key (kbd "C-_")) ; undo

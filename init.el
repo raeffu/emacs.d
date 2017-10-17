@@ -109,7 +109,7 @@
 ;; (set-face-attribute 'default nil
 ;;                     :family "Source Code Pro" :height 160)
 (set-face-attribute 'default nil
-                    :family "Menlo" :height 160)
+                    :family "Menlo" :height 140)
 (set-face-attribute 'variable-pitch nil
                     :family "Fira Sans" :height 140 :weight 'regular)
 
