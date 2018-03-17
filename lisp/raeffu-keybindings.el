@@ -11,6 +11,7 @@
 (global-unset-key (kbd "C-n")) ; next-line
 (global-unset-key (kbd "C-M-i"))
 (global-set-key (kbd "M-j") 'backward-char)
+(global-unset-key (kbd "M-l"))
 (global-set-key (kbd "M-l") 'forward-char)
 (global-unset-key (kbd "M-i")) ; helm-multi-swoop-all-from-helm-swoop
 (global-set-key (kbd "M-i") 'previous-line)
@@ -68,10 +69,10 @@
 (global-unset-key (kbd "C-w"))
 (global-unset-key (kbd "C-s"))
 (global-unset-key (kbd "C-a"))
-(global-set-key (kbd "C-d") 'windmove-right)
-(global-set-key (kbd "C-s") 'windmove-down)
-(global-set-key (kbd "C-a") 'windmove-left)
 (bind-keys*
+ ("C-d" . windmove-right)
+ ("C-s" . windmove-down)
+ ("C-a" . windmove-left)
  ("C-w" . windmove-up))
 
 (global-unset-key (kbd "C-/")) ; undo

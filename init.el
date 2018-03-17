@@ -119,30 +119,6 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
-(use-package solarized-theme
-  :ensure t
-  :defer t
-  :init (load-theme 'solarized-light t)
-  :config
-  ;; make the fringe stand out from the background
-  (setq solarized-distinct-fringe-background t)
-  
-  ;; Don't change the font for some headings and titles
-  (setq solarized-use-variable-pitch nil)
-  
-  ;; Use less colors for indicators such as git:gutter, flycheck and similar
-  (setq solarized-emphasize-indicators t)
-  
-  ;; Don't change size of org-mode headlines (but keep other size-changes)
-  (setq solarized-scale-org-headlines nil)
-  
-  ;; Avoid all font-size changes
-  (setq solarized-height-minus-1 1)
-  (setq solarized-height-plus-1 1)
-  (setq solarized-height-plus-2 1)
-  (setq solarized-height-plus-3 1)
-  (setq solarized-height-plus-4 1))
-
 ;; utf-8 all the things
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
@@ -166,6 +142,12 @@
       auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
 (server-start) ;; Allow this Emacs process to be a server for client processes.
+
+;; (use-package moe-theme
+;;   :ensure t
+;;   :config (moe-dark))
+(use-package dracula-theme
+  :ensure t)
 
 (use-package page-break-lines           ; Turn page breaks into lines
   :ensure t
@@ -313,6 +295,9 @@
   :ensure t
   :bind (("M-m" . helm-swoop)
          ("M-M" . helm-swoop-back-to-last-point))
+  :bind (:map helm-swoop-map
+              ("M-i" . helm-previous-line))
+  
   :init
   (bind-key "M-m" 'helm-swoop-from-isearch isearch-mode-map))
 
@@ -426,6 +411,15 @@ Has no effect when `persp-show-modestring' is nil."
   :config
   (zoom-window-setup))
 
+(use-package yasnippet
+  :ensure t
+  :defer t
+  :config
+  (setq yas-snippet-dirs "~/.emacs.d/snippets")
+  (yas-global-mode 1)
+  :diminish (yas-minor-mode . " YS"))
+
+(add-to-list 'load-path "~/.emacs.d/elpa/Enhanced-Ruby-Mode")
 (use-package enh-ruby-mode
   :ensure t
   :defer t
@@ -458,17 +452,10 @@ Has no effect when `persp-show-modestring' is nil."
             (defun rspec-ruby-mode-hook ()
               (tester-init-test-run #'rspec-run-single-file "_spec.rb$")
               (tester-init-test-suite-run #'rake-test))
-            (add-hook 'enh-ruby-mode-hook 'rspec-ruby-mode-hook))
+            (add-hook 'enh-ruby-mode-hook 'rspec-ruby-mode-hook)
+            (yas-global-mode 1))
   :bind (("C-c , s" . rspec-verify-single)
          ("C-c , v" . rspec-verify)))
-
-(use-package yasnippet
-  :ensure t
-  :defer t
-  :config
-  (setq yas-snippet-dirs "~/.emacs.d/snippets")
-  (yas-global-mode 1)
-  :diminish (yas-minor-mode . " YS"))
 
 (use-package rbenv
   :ensure t
@@ -678,6 +665,9 @@ Has no effect when `persp-show-modestring' is nil."
   :ensure t)
 
 (use-package ess
+  :ensure t)
+
+(use-package csv-mode
   :ensure t)
 
 (use-package diff
