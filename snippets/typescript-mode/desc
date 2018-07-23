@@ -1,0 +1,7 @@
+# name: desc
+# key: desc
+# contributor: Raphael Laubscher
+# --
+describe('$1', () => {
+  $0
+});

@@ -59,7 +59,7 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (require 'raeffu-utils)
-(require 'raeffu-functions)
+;;(require 'raeffu-functions)
 (require 'raeffu-keybindings)
 
 (column-number-mode 1)
@@ -142,12 +142,6 @@
       auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
 (server-start) ;; Allow this Emacs process to be a server for client processes.
-
-;; (use-package moe-theme
-;;   :ensure t
-;;   :config (moe-dark))
-(use-package dracula-theme
-  :ensure t)
 
 (use-package page-break-lines           ; Turn page breaks into lines
   :ensure t
@@ -523,6 +517,38 @@ Has no effect when `persp-show-modestring' is nil."
       (tester-init-test-suite-run #'overseer-test))
     (add-hook 'overseer-mode-hook 'test-emacs-lisp-hook)))
 
+(use-package add-node-modules-path
+  :ensure t
+  :init
+  (add-hook 'typescript-mode-hook #'add-node-modules-path))
+
+(use-package prettier-js
+  :ensure t
+  :init
+  (add-hook 'typescript-mode-hook #'prettier-js-mode)
+  (add-hook 'js2-mode-hook #'prettier-js-mode))
+
+;; https://www.reddit.com/r/emacs/comments/6w67te/tide_questions_regarding_usepackage/
+(use-package tide
+  :ensure t
+  :bind (:map tide-mode-map
+              ("M-w" . tide-rename-symbol)
+              ("M-n" . tide-references)
+              ("M-'" . tide-documentation-at-point)
+              ("M-e" . company-tide))
+  :config (progn
+            (
+             setq company-tooltip-align-annotations t
+                  tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil)))
+  :init (add-hook 'typescript-mode-hook (lambda()
+                                          (flycheck-mode +1)
+                                          (setq flycheck-check-syntax-automatically '(save mode-enabled))
+                                          (tide-setup)
+                                          (eldoc-mode +1)
+                                          (tide-hl-identifier-mode +1)
+                                          (company-mode +1)))
+  :after (company typescript-mode))
+
 (use-package karma
   :ensure t
   :init)
@@ -578,7 +604,9 @@ Has no effect when `persp-show-modestring' is nil."
 
 (use-package typescript-mode
   :ensure t
-  :config (setq typescript-indent-level 2))
+  :config
+  (setq typescript-indent-level 2)
+  (yas-global-mode 1))
 
 (use-package coffee-mode
   :ensure t
@@ -633,7 +661,8 @@ Has no effect when `persp-show-modestring' is nil."
   :ensure t)
 
 (use-package scss-mode
-  :ensure t)
+  :ensure t
+  :mode (("\\.scss'" . scss-mode)))
 
 (use-package whitespace-cleanup-mode
   :ensure t
@@ -664,8 +693,8 @@ Has no effect when `persp-show-modestring' is nil."
 (use-package matlab-mode
   :ensure t)
 
-(use-package ess
-  :ensure t)
+;;(use-package ess
+;;  :ensure t)
 
 (use-package csv-mode
   :ensure t)
@@ -692,6 +721,29 @@ Has no effect when `persp-show-modestring' is nil."
 
 (use-package alchemist
   :ensure t)
+
+;; Themes
+
+;; (use-package moe-theme
+;;   :ensure t
+;;   :config (moe-dark))
+
+;; (use-package dracula-theme
+;;   :config
+;;   (custom-set-faces
+;;   '(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#EFEFEF")))
+;; ))
+
+(use-package color-theme-sanityinc-tomorrow
+  :config
+  (setf custom-safe-themes t)
+  (color-theme-sanityinc-tomorrow-day)
+  (custom-set-faces
+   `(smerge-mine ((t :foreground "#718c00" :background "#efefef")))
+   `(smerge-other ((t :foreground "#8959a8" :background "#efefef")))
+   `(smerge-markers ((t :foreground "#8959a8" :background "#d6d6d6")))
+  )
+  )
 
 (provide 'init)
 

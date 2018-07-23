@@ -1,0 +1,7 @@
+# name: it
+# key: it
+# contributor: Raphael Laubscher
+# --
+it('$1', () => {
+  $0
+});

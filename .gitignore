@@ -9,6 +9,8 @@ org-clock-save.el
 ac-comphist.dat
 tramp
 elpa
+elpa.bac
+tmp
 var
 eshell
 ido.last
@@ -22,3 +24,5 @@ projectile-bookmarks.eld
 projectile.cache
 tutorial/*
 .mc-lists.el
+network-security.data
+persp-confs/
