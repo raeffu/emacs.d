@@ -389,7 +389,7 @@
     "Format the perspective name given by NAME for display in `persp-modestring'."
     (let ((string-name (format "%s" name)))
       (if (equal name (persp-name persp-curr))
-	  (propertize string-name 'face 'persp-selected-face))))
+          (propertize string-name 'face 'persp-selected-face))))
 
   (defun persp-update-modestring ()
     "Update `persp-modestring' to reflect the current perspectives.
@@ -398,12 +398,15 @@ Has no effect when `persp-show-modestring' is nil."
       (setq persp-modestring
 	    (append '("[")
 		    (persp-intersperse (mapcar 'persp-format-name (persp-names)) "")
-		    '("]"))))))
+		    '("]")))))
+  )
 
 (use-package zoom-window
   :ensure t
   :config
-  (zoom-window-setup))
+  (zoom-window-setup)
+  (setq zoom-window-mode-line-color "#eab700") ;; color-theme-sanityinc-tomorrow
+  )
 
 (use-package yasnippet
   :ensure t
@@ -459,7 +462,9 @@ Has no effect when `persp-show-modestring' is nil."
 	  (global-rbenv-mode))
   :config (progn
             (global-rbenv-mode)
-            (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)))
+            (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)
+            (add-hook 'sass-mode-hook 'rbenv-use-corresponding)
+            (add-hook 'scss-mode-hook 'rbenv-use-corresponding)))
 
 (use-package f
   :ensure t)
@@ -525,8 +530,8 @@ Has no effect when `persp-show-modestring' is nil."
 (use-package prettier-js
   :ensure t
   :init
-  (add-hook 'typescript-mode-hook #'prettier-js-mode)
-  (add-hook 'js2-mode-hook #'prettier-js-mode))
+  (add-hook 'typescript-mode-hook #'prettier-js-mode))
+  ;; (add-hook 'js2-mode-hook #'prettier-js-mode))
 
 ;; https://www.reddit.com/r/emacs/comments/6w67te/tide_questions_regarding_usepackage/
 (use-package tide
@@ -535,6 +540,7 @@ Has no effect when `persp-show-modestring' is nil."
               ("M-w" . tide-rename-symbol)
               ("M-n" . tide-references)
               ("M-'" . tide-documentation-at-point)
+              ("M-[" . tide-fix)
               ("M-e" . company-tide))
   :config (progn
             (
@@ -621,6 +627,16 @@ Has no effect when `persp-show-modestring' is nil."
   :config
   (js2r-add-keybindings-with-prefix "C-c m r"))
 
+(use-package xref-js2
+  :ensure t
+  :after js2-mode
+  :init
+  (defun add-xref-js2-backend ()
+    (add-hook 'xref-backend-functions
+              #'xref-js2-xref-backend nil t))
+
+  (add-hook 'js2-mode-hook #'add-xref-js2-backend))
+
 (use-package company-tern
   :disabled t
   :ensure t
@@ -657,12 +673,17 @@ Has no effect when `persp-show-modestring' is nil."
 	      ("M-e" . emmet-expand-line))
   :config (add-hook 'web-mode-hook 'emmet-mode))
 
+(setq exec-path (cons (expand-file-name "~/.rbenv/shims") exec-path))
+
 (use-package sass-mode
-  :ensure t)
+  :ensure t
+  :mode "\\.sass\\'")
 
 (use-package scss-mode
   :ensure t
-  :mode (("\\.scss'" . scss-mode)))
+  :mode "\\.scss\\'"
+  :init
+  (setq scss-compile-at-save nil))
 
 (use-package whitespace-cleanup-mode
   :ensure t
@@ -716,6 +737,9 @@ Has no effect when `persp-show-modestring' is nil."
   :ensure t
   :mode ("\\.pl" . prolog-mode))
 
+(use-package sh-mode
+  :mode ("\\.zsh" . sh-mode))
+
 (use-package elixir-mode
   :ensure t)
 
@@ -730,6 +754,7 @@ Has no effect when `persp-show-modestring' is nil."
 
 ;; (use-package dracula-theme
 ;;   :config
+;;   (setf custom-safe-themes t)
 ;;   (custom-set-faces
 ;;   '(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#EFEFEF")))
 ;; ))
@@ -742,7 +767,10 @@ Has no effect when `persp-show-modestring' is nil."
    `(smerge-mine ((t :foreground "#718c00" :background "#efefef")))
    `(smerge-other ((t :foreground "#8959a8" :background "#efefef")))
    `(smerge-markers ((t :foreground "#8959a8" :background "#d6d6d6")))
-  )
+   `(web-mode-html-attr-name-face ((t :foreground "#8959a8")))
+   `(web-mode-html-tag-face ((t :foreground "#718c00")))
+   `(persp-selected-face ((t :foreground "#3e999f" :weight bold)))
+   )
   )
 
 (provide 'init)

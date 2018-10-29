@@ -1,0 +1,7 @@
+# name: beforeEach
+# key: bef
+# contributor: Raphael Laubscher
+# --
+beforeEach(() => {
+  $0
+});

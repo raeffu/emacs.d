@@ -8,8 +8,8 @@ backup.*
 org-clock-save.el
 ac-comphist.dat
 tramp
-elpa
-elpa.bac
+elpa*
+elpa*.bac
 tmp
 var
 eshell

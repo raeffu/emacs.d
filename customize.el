@@ -85,7 +85,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized tide persp-mode persp-projectile helm helm-core prettier-js add-node-modules-path whitespace-mode csv-mode dracula-theme moe-theme alchemist solarized-theme cmake-mode ess matlab-mode nyan-mode zoom-window ace-jump-mode yaml-mode whitespace-cleanup-mode web-mode use-package typescript-mode smartparens scss-mode sass-mode rubocop rspec-mode rbenv rainbow-mode rainbow-delimiters page-break-lines overseer markdown-mode magit macrostep karma js2-refactor ibuffer-projectile highlight-numbers helm-swoop helm-projectile helm-flycheck helm-descbinds helm-ag exec-path-from-shell erlang enh-ruby-mode emmet-mode elisp-slime-nav drag-stuff default-text-scale company coffee-mode cask-mode ag)))
+    (color-theme-sanityinc-tomorrow xref-js2 color-theme-sanityinc-solarized tide persp-mode persp-projectile helm helm-core prettier-js add-node-modules-path whitespace-mode csv-mode dracula-theme moe-theme alchemist solarized-theme cmake-mode ess matlab-mode nyan-mode zoom-window ace-jump-mode yaml-mode whitespace-cleanup-mode web-mode use-package typescript-mode smartparens scss-mode rubocop rspec-mode rbenv rainbow-mode rainbow-delimiters page-break-lines overseer markdown-mode magit macrostep karma js2-refactor ibuffer-projectile highlight-numbers helm-swoop helm-projectile helm-flycheck helm-descbinds helm-ag exec-path-from-shell erlang enh-ruby-mode emmet-mode elisp-slime-nav drag-stuff default-text-scale company coffee-mode cask-mode ag)))
  '(projectile-globally-ignored-directories
    (quote
     ("vendor/bundle" ".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "_build" ".cask" "deps" "node_modules" "lib/elixir/_build")))
@@ -117,27 +117,25 @@
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
  '(web-mode-markup-indent-offset 2)
- '(whitespace-line-column 95)
- '(zoom-window-mode-line-color "#954575"))
+ '(whitespace-line-column 95))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(helm-ff-dotted-directory ((t (:inherit helm-ff-directory))))
- '(magit-diff-added ((t :foreground "#718c00")))
- '(magit-diff-added-highlight ((t :foreground "#718c00")))
- '(magit-diff-context-highlight ((t :background "#ffffff")))
  '(magit-diff-hunk-heading ((t :foreground "#8959a8")))
  '(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#EFEFEF")))
- '(magit-diff-removed ((t :foreground "#f5871f")))
- '(magit-diff-removed-highlight ((t :foreground "#f5871f")))
  '(markdown-header-face-1 ((t (:inherit markdown-header-face :weight bold))))
  '(markdown-header-face-2 ((t (:inherit markdown-header-face :foreground "#2aa198"))))
  '(markdown-header-face-3 ((t (:inherit markdown-header-face :foreground "#859900"))))
- '(persp-selected-face ((t :foreground "#14A294" :weight bold)))
  '(smerge-lower ((t (:background "#2C5669"))))
- '(smerge-upper ((t (:background "#6D3255")))))
+ '(smerge-markers ((t :foreground "#8959a8" :background "#d6d6d6")))
+ '(smerge-mine ((t :foreground "#718c00" :background "#efefef")))
+ '(smerge-other ((t :foreground "#8959a8" :background "#efefef")))
+ '(smerge-upper ((t (:background "#6D3255"))))
+ '(web-mode-html-attr-name-face ((t :foreground "#8959a8")))
+ '(web-mode-html-tag-face ((t :foreground "#718c00"))))
 
 ;; open zsh scripts with syntax highlighting
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))

@@ -16,6 +16,9 @@
 (global-unset-key (kbd "M-i")) ; helm-multi-swoop-all-from-helm-swoop
 (global-set-key (kbd "M-i") 'previous-line)
 (global-set-key (kbd "M-I") 'scroll-down)
+(bind-keys*
+ ("M-C-S-i" . scroll-other-window-down)
+ ("M-C-S-k" . scroll-other-window))
 (global-set-key (kbd "M-k") 'next-line)
 (global-set-key (kbd "M-K") 'scroll-up)
 (global-set-key (kbd "M-L") 'end-of-line)
@@ -63,7 +66,7 @@
 (global-set-key (kbd "M-1") 'zoom-window-zoom)
 
 (global-unset-key (kbd "M-x")) ; execute-extended-command
-(global-set-key (kbd "M-q") 'shell-command)
+(global-set-key (kbd "M-q") 'eshell)
 
 (global-unset-key (kbd "C-d"))
 (global-unset-key (kbd "C-w"))
@@ -87,7 +90,8 @@
 (global-unset-key (kbd "C-r")) ; yank-pop
 (global-set-key (kbd "M-x") 'kill-region)
 (global-set-key (kbd "M-c") 'kill-ring-save)
-(global-set-key (kbd "M-v") 'yank)
+(bind-keys*
+ ("M-v" . yank))
 (global-set-key (kbd "M-V") 'yank-pop)
 (global-set-key (kbd "C-r d") 'kill-rectangle)
 
