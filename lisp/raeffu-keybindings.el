@@ -30,8 +30,8 @@
 (global-set-key (kbd "M-o") 'forward-word)
 (global-set-key (kbd "M-U") 'backward-paragraph)
 (global-set-key (kbd "M-O") 'forward-paragraph)
-(global-set-key (kbd "M-C-o") 'forward-paragraph)
-(global-set-key (kbd "M-C-u") 'backward-paragraph)
+(global-set-key (kbd "M-C-o") 'forward-sexp)
+(global-set-key (kbd "M-C-u") 'backward-sexp)
 (global-set-key (kbd "M-b") 'pop-to-mark-command)
 
 (global-unset-key (kbd "C-<backspace>")) ; backward-kill-word

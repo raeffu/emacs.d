@@ -530,8 +530,8 @@ Has no effect when `persp-show-modestring' is nil."
 (use-package prettier-js
   :ensure t
   :init
-  (add-hook 'typescript-mode-hook #'prettier-js-mode))
-  ;; (add-hook 'js2-mode-hook #'prettier-js-mode))
+  (add-hook 'typescript-mode-hook #'prettier-js-mode)
+  (add-hook 'js2-mode-hook #'prettier-js-mode))
 
 ;; https://www.reddit.com/r/emacs/comments/6w67te/tide_questions_regarding_usepackage/
 (use-package tide
@@ -541,6 +541,7 @@ Has no effect when `persp-show-modestring' is nil."
               ("M-n" . tide-references)
               ("M-'" . tide-documentation-at-point)
               ("M-[" . tide-fix)
+              ("C-x o" . tide-organize-imports)
               ("M-e" . company-tide))
   :config (progn
             (
@@ -767,9 +768,12 @@ Has no effect when `persp-show-modestring' is nil."
    `(smerge-mine ((t :foreground "#718c00" :background "#efefef")))
    `(smerge-other ((t :foreground "#8959a8" :background "#efefef")))
    `(smerge-markers ((t :foreground "#8959a8" :background "#d6d6d6")))
+   `(magit-diff-hunk-heading ((t :foreground "#8959a8")))
+   `(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#EFEFEF")))
    `(web-mode-html-attr-name-face ((t :foreground "#8959a8")))
    `(web-mode-html-tag-face ((t :foreground "#718c00")))
    `(persp-selected-face ((t :foreground "#3e999f" :weight bold)))
+   `(highlight ((t :background "#F6E8E8")))
    )
   )
 
