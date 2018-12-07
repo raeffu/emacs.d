@@ -26,13 +26,23 @@
 
 (global-unset-key (kbd "M-b")) ; backward-word
 (global-unset-key (kbd "M-f")) ; forward-word
-(global-set-key (kbd "M-u") 'backward-word)
-(global-set-key (kbd "M-o") 'forward-word)
-(global-set-key (kbd "M-U") 'backward-paragraph)
-(global-set-key (kbd "M-O") 'forward-paragraph)
-(global-set-key (kbd "M-C-o") 'forward-sexp)
-(global-set-key (kbd "M-C-u") 'backward-sexp)
-(global-set-key (kbd "M-b") 'pop-to-mark-command)
+(bind-keys*
+ ("M-C-n" . forward-list)
+ ("M-u" . backward-word)
+ ("M-o" . forward-word)
+ ("M-U" . backward-paragraph)
+ ("M-O" . forward-paragraph)
+ ("M-C-o" . forward-sexp)
+ ("M-C-u" . backward-sexp)
+ ("M-b" . pop-to-mark-command)
+ )
+;; (global-set-key (kbd "M-u") 'backward-word)
+;; (global-set-key (kbd "M-o") 'forward-word)
+;; (global-set-key (kbd "M-U") 'backward-paragraph)
+;; (global-set-key (kbd "M-O") 'forward-paragraph)
+;; (global-set-key (kbd "M-C-o") 'forward-sexp)
+;; (global-set-key (kbd "M-C-u") 'backward-sexp)
+;; (global-set-key (kbd "M-b") 'pop-to-mark-command)
 
 (global-unset-key (kbd "C-<backspace>")) ; backward-kill-word
 (global-unset-key (kbd "M-d")) ; kill-word

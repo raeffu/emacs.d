@@ -405,7 +405,7 @@ Has no effect when `persp-show-modestring' is nil."
   :ensure t
   :config
   (zoom-window-setup)
-  (setq zoom-window-mode-line-color "#eab700") ;; color-theme-sanityinc-tomorrow
+  ;; (setq zoom-window-mode-line-color "#eab700") ;; color-theme-sanityinc-tomorrow
   )
 
 (use-package yasnippet
@@ -662,7 +662,12 @@ Has no effect when `persp-show-modestring' is nil."
   :bind (("C-x g" . magit-status))
   :config
   (progn
-    (delete 'Git vc-handled-backends)))
+    (delete 'Git vc-handled-backends))
+  (magit-add-section-hook 'magit-status-sections-hook
+                          'magit-insert-unpushed-to-upstream
+                          'magit-insert-unpushed-to-upstream-or-recent
+                          'replace)
+  )
 
 (use-package yaml-mode
   :ensure t
@@ -734,9 +739,9 @@ Has no effect when `persp-show-modestring' is nil."
   :ensure t
   :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 
-(use-package prolog
-  :ensure t
-  :mode ("\\.pl" . prolog-mode))
+;; (use-package prolog
+;;   :ensure t
+;;   :mode ("\\.pl" . prolog-mode))
 
 (use-package sh-mode
   :mode ("\\.zsh" . sh-mode))
@@ -756,13 +761,27 @@ Has no effect when `persp-show-modestring' is nil."
 ;; (use-package dracula-theme
 ;;   :config
 ;;   (setf custom-safe-themes t)
+;;   (setq zoom-window-mode-line-color "#ff79c6")
 ;;   (custom-set-faces
-;;   '(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#EFEFEF")))
+;;    `(magit-diff-hunk-heading-highlight ((t :foreground "#ff79c6" :background "#515151")))
+;;    `(helm-selection ((t :foreground "#50fa7b" :background "#513D6B" :underline nil :bold t)))
 ;; ))
+
+
+;; (use-package color-theme-sanityinc-tomorrow
+;;   :config
+;;   (setf custom-safe-themes t)
+;;   (setq zoom-window-mode-line-color "#eab700")
+;;   (color-theme-sanityinc-tomorrow-eighties)
+;;   (custom-set-faces
+;;    `(persp-selected-face ((t :foreground "#3e999f" :weight bold)))
+;;    )
+;;   )
 
 (use-package color-theme-sanityinc-tomorrow
   :config
   (setf custom-safe-themes t)
+  (setq zoom-window-mode-line-color "#ff79c6")
   (color-theme-sanityinc-tomorrow-day)
   (custom-set-faces
    `(smerge-mine ((t :foreground "#718c00" :background "#efefef")))

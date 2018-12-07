@@ -1,7 +1,7 @@
 ;;; customize.el --- raeffu's customizations
 
 ;; Copyright 2015-present, All rights reserved
-;;
+
 ;; Code licensed under the MIT license
 
 ;; Author: raeffu
@@ -128,14 +128,10 @@
  '(magit-diff-hunk-heading ((t :foreground "#8959a8")))
  '(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#EFEFEF")))
  '(markdown-header-face-1 ((t (:inherit markdown-header-face :weight bold))))
- '(markdown-header-face-2 ((t (:inherit markdown-header-face :foreground "#2aa198"))))
- '(markdown-header-face-3 ((t (:inherit markdown-header-face :foreground "#859900"))))
  '(persp-selected-face ((t :foreground "#3e999f" :weight bold)))
- '(smerge-lower ((t (:background "#2C5669"))))
  '(smerge-markers ((t :foreground "#8959a8" :background "#d6d6d6")))
  '(smerge-mine ((t :foreground "#718c00" :background "#efefef")))
  '(smerge-other ((t :foreground "#8959a8" :background "#efefef")))
- '(smerge-upper ((t (:background "#6D3255"))))
  '(web-mode-html-attr-name-face ((t :foreground "#8959a8")))
  '(web-mode-html-tag-face ((t :foreground "#718c00"))))
 
