@@ -59,9 +59,9 @@
  '(grep-find-ignored-directories
    (quote
     (".cask" "node_modules" "SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "tmp" "log")))
- '(helm-ag-command-option "--path-to-agignore ~/.agignore" t)
- '(helm-ag-fuzzy-match t t)
- '(helm-ag-insert-at-point (quote symbol) t)
+ '(helm-ag-command-option "--path-to-agignore ~/.agignore")
+ '(helm-ag-fuzzy-match t)
+ '(helm-ag-insert-at-point (quote symbol))
  '(helm-buffer-max-length nil)
  '(helm-buffers-fuzzy-matching t)
  '(helm-ff-file-name-history-use-recentf t)
@@ -85,7 +85,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (color-theme-sanityinc-tomorrow xref-js2 color-theme-sanityinc-solarized persp-mode persp-projectile helm helm-core prettier-js add-node-modules-path whitespace-mode csv-mode dracula-theme moe-theme alchemist solarized-theme cmake-mode ess matlab-mode nyan-mode zoom-window ace-jump-mode yaml-mode whitespace-cleanup-mode web-mode use-package typescript-mode smartparens scss-mode rubocop rspec-mode rbenv rainbow-mode rainbow-delimiters page-break-lines overseer markdown-mode macrostep karma js2-refactor ibuffer-projectile highlight-numbers helm-swoop helm-projectile helm-flycheck helm-descbinds helm-ag exec-path-from-shell erlang enh-ruby-mode emmet-mode elisp-slime-nav drag-stuff default-text-scale company coffee-mode cask-mode ag)))
+    (emojify wgrep doom-themes all-the-icons color-theme-sanityinc-tomorrow xref-js2 color-theme-sanityinc-solarized persp-mode persp-projectile helm helm-core prettier-js add-node-modules-path whitespace-mode csv-mode dracula-theme moe-theme alchemist solarized-theme cmake-mode ess matlab-mode nyan-mode zoom-window ace-jump-mode yaml-mode whitespace-cleanup-mode web-mode use-package typescript-mode smartparens scss-mode rubocop rbenv rainbow-mode rainbow-delimiters page-break-lines overseer markdown-mode macrostep karma js2-refactor ibuffer-projectile highlight-numbers helm-swoop helm-projectile helm-flycheck helm-descbinds helm-ag exec-path-from-shell erlang enh-ruby-mode emmet-mode elisp-slime-nav drag-stuff default-text-scale company coffee-mode cask-mode ag)))
  '(projectile-globally-ignored-directories
    (quote
     ("vendor/bundle" ".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "_build" ".cask" "deps" "node_modules" "lib/elixir/_build")))
@@ -123,17 +123,33 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(company-preview ((t :foreground "#5B6268" :background "#21242b")))
+ '(company-tooltip ((t :inherit (quote tooltip) :background nil)))
+ '(company-tooltip-selection ((t :weight bold :inverse-video nil :foreground "#8e908c" :background "#2257A0")))
+ '(dired-directory ((t :foreground "#3e999f")))
+ '(fringe ((t :foreground "#bbc2cf" :background "#282c34")))
  '(helm-ff-dotted-directory ((t (:inherit helm-ff-directory))))
- '(highlight ((t :background "#F6E8E8")))
- '(magit-diff-hunk-heading ((t :foreground "#8959a8")))
- '(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#EFEFEF")))
+ '(helm-selection ((t :foreground "#c678dd" :background "#563063" :underline t)))
+ '(highlight ((t (:background "#282c34" :foreground "#c678dd" :inverse-video nil :underline t))))
+ '(hl-line ((t (:background "#354A59"))))
+ '(linum ((t :weight medium :slant normal :foreground "#bbc2cf" :background "#282c34")))
+ '(magit-diff-added ((t :background "#282c34")))
+ '(magit-diff-added-highlight ((t :background "#21242b")))
+ '(magit-diff-file-heading-highlight ((t :foreground "#c678dd")))
+ '(magit-diff-hunk-heading ((t :foreground "#a9a1e1")))
+ '(magit-diff-hunk-heading-highlight ((t :background "#282c34" :foreground "#c678dd")))
+ '(magit-diff-removed ((t :background "#282c34")))
+ '(magit-diff-removed-highlight ((t :background "#21242b")))
+ '(magit-section-highlight ((t :background "#21242b")))
  '(markdown-header-face-1 ((t (:inherit markdown-header-face :weight bold))))
- '(persp-selected-face ((t :foreground "#3e999f" :weight bold)))
- '(smerge-markers ((t :foreground "#8959a8" :background "#d6d6d6")))
- '(smerge-mine ((t :foreground "#718c00" :background "#efefef")))
- '(smerge-other ((t :foreground "#8959a8" :background "#efefef")))
+ '(match ((t :background "#ffffff" :foreground "#F52791" :inverse-video t)))
+ '(smerge-refined-removed ((t (:inherit smerge-refined-change :background "#ff6c6b"))))
+ '(sp-show-pair-match-face ((t (:inherit show-paren-match :background "#ff6c6b" :foreground "#1B2229" :weight ultra-bold))))
+ '(sp-show-pair-mismatch-face ((t (:inherit show-paren-mismatch :background "#1B2229" :foreground "#ff6c6b" :weight ultra-bold))))
+ '(tooltip ((t (:background "#23272e" :foreground "#bbc2cf" :inverse-video nil))))
  '(web-mode-html-attr-name-face ((t :foreground "#8959a8")))
- '(web-mode-html-tag-face ((t :foreground "#718c00"))))
+ '(web-mode-html-tag-face ((t :foreground "#718c00")))
+ '(widget-field ((t :background "#282c34"))))
 
 ;; open zsh scripts with syntax highlighting
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))

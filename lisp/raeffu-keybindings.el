@@ -17,8 +17,8 @@
 (global-set-key (kbd "M-i") 'previous-line)
 (global-set-key (kbd "M-I") 'scroll-down)
 (bind-keys*
- ("M-C-S-i" . scroll-other-window-down)
- ("M-C-S-k" . scroll-other-window))
+ ("M-C-S-i" . scroll-other-window)
+ ("M-C-S-k" . scroll-other-window-down))
 (global-set-key (kbd "M-k") 'next-line)
 (global-set-key (kbd "M-K") 'scroll-up)
 (global-set-key (kbd "M-L") 'end-of-line)
@@ -32,16 +32,16 @@
  ("M-o" . forward-word)
  ("M-U" . backward-paragraph)
  ("M-O" . forward-paragraph)
- ("M-C-o" . forward-sexp)
- ("M-C-u" . backward-sexp)
  ("M-b" . pop-to-mark-command)
  )
 ;; (global-set-key (kbd "M-u") 'backward-word)
 ;; (global-set-key (kbd "M-o") 'forward-word)
 ;; (global-set-key (kbd "M-U") 'backward-paragraph)
 ;; (global-set-key (kbd "M-O") 'forward-paragraph)
-;; (global-set-key (kbd "M-C-o") 'forward-sexp)
-;; (global-set-key (kbd "M-C-u") 'backward-sexp)
+(bind-keys*
+ ("M-C-o" . forward-sexp)
+ ("M-C-u" . backward-sexp)
+ )
 ;; (global-set-key (kbd "M-b") 'pop-to-mark-command)
 
 (global-unset-key (kbd "C-<backspace>")) ; backward-kill-word
@@ -241,6 +241,16 @@
 
 ;; tmux
 ;; (global-unset-key (kbd "C-q")) ; quoted-insert
+
+;; smerge
+(bind-keys*
+ ("C-c m m" . smerge-keep-mine)
+ ("C-c m o" . smerge-keep-other)
+ ("C-c m c" . smerge-keep-current)
+ ("C-c m r" . smerge-resolve)
+ ("C-c m n" . smerge-next)
+ ("C-c m p" . smerge-prev)
+ )
 
 ;; swap `transpose-chars' key with `transpose-lines'
 (global-set-key "\C-t" #'transpose-lines)

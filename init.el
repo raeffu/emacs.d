@@ -368,7 +368,8 @@
   :ensure t
   :bind (("C-p s" . projectile-persp-switch-project))
   :config
-  (setq projectile-completion-system 'helm)
+  (setq projectile-completion-system 'helm
+        projectile-indexing-method 'alien)
   (projectile-global-mode)
   (helm-projectile-on)
   (setq projectile-enable-caching nil)
@@ -450,6 +451,9 @@ Has no effect when `persp-show-modestring' is nil."
               (tester-init-test-run #'rspec-run-single-file "_spec.rb$")
               (tester-init-test-suite-run #'rake-test))
             (add-hook 'enh-ruby-mode-hook 'rspec-ruby-mode-hook)
+            (setq rspec-use-docker-when-possible 1)
+            (setq rspec-docker-command "docker-compose exec")
+            (setq rspec-docker-container "app")
             (yas-global-mode 1))
   :bind (("C-c , s" . rspec-verify-single)
          ("C-c , v" . rspec-verify)))
@@ -527,11 +531,17 @@ Has no effect when `persp-show-modestring' is nil."
   :init
   (add-hook 'typescript-mode-hook #'add-node-modules-path))
 
+(defun maybe-use-prettier ()
+  "Enable prettier-js-mode if an rc file is located."
+  (if (locate-dominating-file default-directory "prettier.config.js")
+      (prettier-js-mode +1)))
+
 (use-package prettier-js
   :ensure t
   :init
-  (add-hook 'typescript-mode-hook #'prettier-js-mode)
-  (add-hook 'js2-mode-hook #'prettier-js-mode))
+  (add-hook 'typescript-mode-hook 'maybe-use-prettier)
+  (add-hook 'js2-mode-hook 'maybe-use-prettier)
+  )
 
 ;; https://www.reddit.com/r/emacs/comments/6w67te/tide_questions_regarding_usepackage/
 (use-package tide
@@ -681,9 +691,6 @@ Has no effect when `persp-show-modestring' is nil."
 
 (setq exec-path (cons (expand-file-name "~/.rbenv/shims") exec-path))
 
-(use-package sass-mode
-  :ensure t
-  :mode "\\.sass\\'")
 
 (use-package scss-mode
   :ensure t
@@ -691,6 +698,9 @@ Has no effect when `persp-show-modestring' is nil."
   :init
   (setq scss-compile-at-save nil))
 
+(use-package sass-mode
+  :ensure t
+  :mode "\\.sass\\'")
 (use-package whitespace-cleanup-mode
   :ensure t
   :bind (("C-c t c" . whitespace-cleanup-mode)
@@ -752,6 +762,15 @@ Has no effect when `persp-show-modestring' is nil."
 (use-package alchemist
   :ensure t)
 
+(use-package wgrep
+  :ensure t)
+
+(use-package emojify
+  :config (progn
+            (add-hook 'after-init-hook #'global-emojify-mode)
+            (prettify-symbols-mode t))
+  :ensure t)
+
 ;; Themes
 
 ;; (use-package moe-theme
@@ -762,11 +781,51 @@ Has no effect when `persp-show-modestring' is nil."
 ;;   :config
 ;;   (setf custom-safe-themes t)
 ;;   (setq zoom-window-mode-line-color "#ff79c6")
+;;   (setq ansi-color-names-vector (vector "#515151" "#ff6e67" "#50fa7b" "#f1fa8c" "#0189cc" "#bd93f9" "#8be9fd" "#ccccc7"))
 ;;   (custom-set-faces
 ;;    `(magit-diff-hunk-heading-highlight ((t :foreground "#ff79c6" :background "#515151")))
-;;    `(helm-selection ((t :foreground "#50fa7b" :background "#513D6B" :underline nil :bold t)))
+;;    `(helm-selection ((t :foreground "#ff5555" :background "#513D6B" :underline nil :bold t)))
+;;    `(font-lock-variable-name-face ((t :foreground "#f1fa8c")))
+;;    `(font-lock-string-face ((t :foreground "#ffb86c")))
+;;    `(enh-ruby-string-delimiter-face ((t :foreground "#ffb86c")))
 ;; ))
 
+;; (use-package all-the-icons
+;;   :ensure t)
+
+(use-package doom-themes
+  :init
+  (load-theme 'doom-one t)
+  :config
+  (progn
+    (doom-themes-neotree-config)
+    (setq doom-neotree-line-spacing 0)
+    (doom-themes-org-config))
+  (custom-set-faces
+   `(hl-line ((t :background "#354A59")))
+   `(linum ((t :weight medium :slant normal :foreground "#bbc2cf" :background "#282c34")))
+   `(fringe ((t :foreground "#bbc2cf" :background "#282c34")))
+   `(widget-field ((t :background "#282c34")))
+   `(magit-section-highlight ((t :background "#354A59")))
+   `(magit-diff-file-heading-highlight ((t :foreground "#c678dd" :background "#354A59")))
+   `(magit-diff-hunk-heading-highlight ((t :background "#354A59" :foreground "#c678dd")))
+   `(magit-diff-hunk-heading ((t :foreground "#a9a1e1")))
+   `(magit-diff-added ((t :background "#282c34")))
+   `(magit-diff-added-highlight ((t :background "#21242b" :weight normal)))
+   `(magit-diff-removed ((t :background "#282c34")))
+   `(magit-diff-removed-highlight ((t :background "#21242b" :weight normal)))
+   `(smerge-refined-removed ((t :background "#A44646")))
+   `(highlight ((t :foreground "#ff6c6b" :background "#282c34" :underline t)))
+   `(helm-selection ((t :foreground "#51afef" :background "#2E4651" :underline t)))
+   `(company-preview ((t :foreground "#5B6268" :background "#21242b")))
+   `(tooltip ((t :foreground "#bbc2cf" :background "#23272e" :inverse-video nil)))
+   `(company-tooltip ((t :inherit 'tooltip :background nil)))
+   `(company-tooltip-selection ((t :weight bold :inverse-video nil :foreground "#8e908c" :background "#2257A0")))
+   `(region ((t :background "#2257A0")))
+   `(sp-show-pair-match-face ((t :foreground "#1B2229" :background "#ff6c6b")))
+   `(sp-show-pair-mismatch-face ((t :foreground "#ff6c6b" :background "#1B2229")))
+   )
+  )
 
 ;; (use-package color-theme-sanityinc-tomorrow
 ;;   :config
@@ -775,26 +834,29 @@ Has no effect when `persp-show-modestring' is nil."
 ;;   (color-theme-sanityinc-tomorrow-eighties)
 ;;   (custom-set-faces
 ;;    `(persp-selected-face ((t :foreground "#3e999f" :weight bold)))
+;;    `(highlight ((t :background "#5B284F")))
 ;;    )
 ;;   )
 
-(use-package color-theme-sanityinc-tomorrow
-  :config
-  (setf custom-safe-themes t)
-  (setq zoom-window-mode-line-color "#ff79c6")
-  (color-theme-sanityinc-tomorrow-day)
-  (custom-set-faces
-   `(smerge-mine ((t :foreground "#718c00" :background "#efefef")))
-   `(smerge-other ((t :foreground "#8959a8" :background "#efefef")))
-   `(smerge-markers ((t :foreground "#8959a8" :background "#d6d6d6")))
-   `(magit-diff-hunk-heading ((t :foreground "#8959a8")))
-   `(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#EFEFEF")))
-   `(web-mode-html-attr-name-face ((t :foreground "#8959a8")))
-   `(web-mode-html-tag-face ((t :foreground "#718c00")))
-   `(persp-selected-face ((t :foreground "#3e999f" :weight bold)))
-   `(highlight ((t :background "#F6E8E8")))
-   )
-  )
+;; (use-package color-theme-sanityinc-tomorrow
+;;   :config
+;;   (setf custom-safe-themes t)
+;;   (setq zoom-window-mode-line-color "#ff79c6")
+;;   (color-theme-sanityinc-tomorrow-day)
+;;   (custom-set-faces
+;;    `(smerge-mine ((t :foreground "#718c00" :background "#efefef")))
+;;    `(smerge-other ((t :foreground "#8959a8" :background "#efefef")))
+;;    `(smerge-markers ((t :foreground "#8959a8" :background "#d6d6d6")))
+;;    `(magit-diff-hunk-heading ((t :foreground "#8959a8")))
+;;    `(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#EFEFEF")))
+;;    `(web-mode-html-attr-name-face ((t :foreground "#8959a8")))
+;;    `(web-mode-html-tag-face ((t :foreground "#718c00")))
+;;    `(persp-selected-face ((t :foreground "#3e999f" :weight bold)))
+;;    `(highlight ((t :background "#F6E8E8")))
+;;    `(dired-directory ((t :foreground "#3e999f")))
+;;    `(match ((t :background "#ffffff" :foreground "#F52791" :inverse-video t)))
+;;    )
+;;   )
 
 (provide 'init)
 
