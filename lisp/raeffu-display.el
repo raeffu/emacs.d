@@ -30,47 +30,46 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'ujelly t)
 
-(defvar mode-line-cleaner-alist
-  `((eldoc-mode . "")
-    (rainbow-mode . "")
-    (overseer-mode . "")
-    (alchemist-mode . "")
-    (guide-key-mode . "")
-    (elisp-slime-nav-mode . "")
-    (rainbow-mode . "")
-    (company-mode . "")
-    (yas/minor-mode . "")
-    (projectile-mode . "")
-    (flycheck-mode . "")
-    (ruby-tools-mode . "")
-    (rinari-minor-mode . "")
-    (smartparens-mode . "")
-    (remove-trailing-whitespace-mode . "")
-    (abbrev-mode . "")
-    ;; Major modes
-    (ruby-mode . "♦")
-    (lisp-interaction-mode . "λ")
-    (emacs-lisp-mode . "EL")
-    (nxhtml-mode . "nx"))
-  "Alist for `clean-mode-line'.
+;; (defvar mode-line-cleaner-alist
+;;   `((eldoc-mode . "")
+;;     (rainbow-mode . "")
+;;     (overseer-mode . "")
+;;     (alchemist-mode . "")
+;;     (guide-key-mode . "")
+;;     (elisp-slime-nav-mode . "")
+;;     (company-mode . "")
+;;     (yas/minor-mode . "")
+;;     (projectile-mode . "")
+;;     (flycheck-mode . "")
+;;     (ruby-tools-mode . "")
+;;     (rinari-minor-mode . "")
+;;     (smartparens-mode . "")
+;;     (remove-trailing-whitespace-mode . "")
+;;     (abbrev-mode . "")
+;;     ;; Major modes
+;;     (ruby-mode . "♦")
+;;     (lisp-interaction-mode . "λ")
+;;     (emacs-lisp-mode . "EL")
+;;     (nxhtml-mode . "nx"))
+;;   "Alist for `clean-mode-line'.
 
-When you add a new element to the alist, keep in mind that you
-must pass the correct minor/major mode symbol and a string you
-want to use in the modeline *in lieu of* the original.")
+;; When you add a new element to the alist, keep in mind that you
+;; must pass the correct minor/major mode symbol and a string you
+;; want to use in the modeline *in lieu of* the original.")
 
-(defun clean-mode-line ()
-  (interactive)
-  (cl-loop for cleaner in mode-line-cleaner-alist
-        do (let* ((mode (car cleaner))
-                  (mode-str (cdr cleaner))
-                  (old-mode-str (cdr (assq mode minor-mode-alist))))
-             (when old-mode-str
-               (setcar old-mode-str mode-str))
-             ;; major mode
-             (when (eq mode major-mode)
-               (setq mode-name mode-str)))))
+;; (defun clean-mode-line ()
+;;   (interactive)
+;;   (cl-loop for cleaner in mode-line-cleaner-alist
+;;         do (let* ((mode (car cleaner))
+;;                   (mode-str (cdr cleaner))
+;;                   (old-mode-str (cdr (assq mode minor-mode-alist))))
+;;              (when old-mode-str
+;;                (setcar old-mode-str mode-str))
+;;              ;; major mode
+;;              (when (eq mode major-mode)
+;;                (setq mode-name mode-str)))))
 
-(add-hook 'after-change-major-mode-hook 'clean-mode-line)
+;; (add-hook 'after-change-major-mode-hook 'clean-mode-line)
 
 (setq linum-format " %d ")
 (global-linum-mode)

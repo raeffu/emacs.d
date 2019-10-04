@@ -311,11 +311,6 @@
   (add-to-list 'helm-info-default-sources
                'helm-source-info-emacs))
 
-(use-package helm-flycheck              ; Helm frontend for Flycheck errors
-  :ensure t
-  :defer t
-  :after flycheck)
-
 (use-package helm-projectile
   :ensure t
   :config
@@ -386,6 +381,7 @@
   :bind (("C-p s" . projectile-persp-switch-project))
   :config
   (persp-mode)
+  (setq persp-show-modestring t)
   (defun persp-format-name (name)
     "Format the perspective name given by NAME for display in `persp-modestring'."
     (let ((string-name (format "%s" name)))
@@ -453,10 +449,12 @@ Has no effect when `persp-show-modestring' is nil."
             (add-hook 'enh-ruby-mode-hook 'rspec-ruby-mode-hook)
             (setq rspec-use-docker-when-possible 1)
             (setq rspec-docker-command "docker-compose exec")
-            (setq rspec-docker-container "app")
+            (setq rspec-docker-container "server")
             (yas-global-mode 1))
   :bind (("C-c , s" . rspec-verify-single)
          ("C-c , v" . rspec-verify)))
+
+(setq exec-path (cons (expand-file-name "~/.rbenv/shims") exec-path))
 
 (use-package rbenv
   :ensure t
@@ -467,8 +465,9 @@ Has no effect when `persp-show-modestring' is nil."
   :config (progn
             (global-rbenv-mode)
             (add-hook 'enh-ruby-mode-hook 'rbenv-use-corresponding)
-            (add-hook 'sass-mode-hook 'rbenv-use-corresponding)
-            (add-hook 'scss-mode-hook 'rbenv-use-corresponding)))
+            ;; (add-hook 'sass-mode-hook 'rbenv-use-corresponding)
+            ;; (add-hook 'scss-mode-hook 'rbenv-use-corresponding)
+            ))
 
 (use-package f
   :ensure t)
@@ -529,7 +528,9 @@ Has no effect when `persp-show-modestring' is nil."
 (use-package add-node-modules-path
   :ensure t
   :init
-  (add-hook 'typescript-mode-hook #'add-node-modules-path))
+  (add-hook 'typescript-mode-hook #'add-node-modules-path)
+  (add-hook 'js-mode-hook #'add-node-modules-path)
+  (add-hook 'js2-mode-hook #'add-node-modules-path))
 
 (defun maybe-use-prettier ()
   "Enable prettier-js-mode if an rc file is located."
@@ -542,6 +543,22 @@ Has no effect when `persp-show-modestring' is nil."
   (add-hook 'typescript-mode-hook 'maybe-use-prettier)
   (add-hook 'js2-mode-hook 'maybe-use-prettier)
   )
+
+(use-package json-mode
+  :ensure t
+  :mode (("\\.json\\'" . json-mode)))
+
+(use-package helm-flycheck              ; Helm frontend for Flycheck errors
+  :ensure t
+  :defer t
+  :after flycheck)
+
+(use-package flycheck
+  :ensure t
+  :defer 5
+  :init (global-flycheck-mode)
+  :config (setq flycheck-temp-prefix ".flycheck")
+  :diminish (flycheck-mode))
 
 ;; https://www.reddit.com/r/emacs/comments/6w67te/tide_questions_regarding_usepackage/
 (use-package tide
@@ -556,7 +573,9 @@ Has no effect when `persp-show-modestring' is nil."
   :config (progn
             (
              setq company-tooltip-align-annotations t
-                  tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil)))
+                  tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
+            )
+  (flycheck-add-next-checker 'typescript-tide 'javascript-eslint 'append)
   :init (add-hook 'typescript-mode-hook (lambda()
                                           (flycheck-mode +1)
                                           (setq flycheck-check-syntax-automatically '(save mode-enabled))
@@ -608,6 +627,7 @@ Has no effect when `persp-show-modestring' is nil."
   :config (progn
             (setq web-mode-markup-indent-offset 2
                   web-mode-css-indent-offset 2
+                  web-mode-attr-indent-offset 2
                   web-mode-code-indent-offset 2)))
 
 (use-package js2-mode
@@ -653,13 +673,6 @@ Has no effect when `persp-show-modestring' is nil."
   :ensure t
   :after company)
 
-(use-package flycheck
-  :ensure t
-  :defer 5
-  :config
-  (global-flycheck-mode 1)
-  :diminish (flycheck-mode))
-
 (use-package drag-stuff
   :ensure t
   :config (progn
@@ -671,8 +684,6 @@ Has no effect when `persp-show-modestring' is nil."
   :defer 2
   :bind (("C-x g" . magit-status))
   :config
-  (progn
-    (delete 'Git vc-handled-backends))
   (magit-add-section-hook 'magit-status-sections-hook
                           'magit-insert-unpushed-to-upstream
                           'magit-insert-unpushed-to-upstream-or-recent
@@ -701,6 +712,7 @@ Has no effect when `persp-show-modestring' is nil."
 (use-package sass-mode
   :ensure t
   :mode "\\.sass\\'")
+
 (use-package whitespace-cleanup-mode
   :ensure t
   :bind (("C-c t c" . whitespace-cleanup-mode)
@@ -720,12 +732,12 @@ Has no effect when `persp-show-modestring' is nil."
 (use-package ace-jump-mode
   :bind ("C-c SPC" . ace-jump-mode))
 
-(use-package nyan-mode
-  :ensure t
-  :config (progn
-	    (nyan-mode 1)
-	    (nyan-start-animation)
-	    (nyan-toggle-wavy-trail)))
+;; (use-package nyan-mode
+;;   :ensure t
+;;   :config (progn
+;; 	    (nyan-mode 1)
+;; 	    (nyan-start-animation)
+;; 	    (nyan-toggle-wavy-trail)))
 
 (use-package matlab-mode
   :ensure t)
@@ -767,8 +779,15 @@ Has no effect when `persp-show-modestring' is nil."
 
 (use-package emojify
   :config (progn
-            (add-hook 'after-init-hook #'global-emojify-mode)
+            ;; (add-hook 'after-init-hook #'global-emojify-mode)
             (prettify-symbols-mode t))
+  :ensure t)
+
+(use-package buffer-move
+  :bind (("<C-up>" . buf-move-up)
+         ("<C-down>" . buf-move-down)
+         ("<C-left>" . buf-move-left)
+         ("<C-right>" . buf-move-right))
   :ensure t)
 
 ;; Themes
@@ -784,7 +803,7 @@ Has no effect when `persp-show-modestring' is nil."
 ;;   (setq ansi-color-names-vector (vector "#515151" "#ff6e67" "#50fa7b" "#f1fa8c" "#0189cc" "#bd93f9" "#8be9fd" "#ccccc7"))
 ;;   (custom-set-faces
 ;;    `(magit-diff-hunk-heading-highlight ((t :foreground "#ff79c6" :background "#515151")))
-;;    `(helm-selection ((t :foreground "#ff5555" :background "#513D6B" :underline nil :bold t)))
+;;    `(helm-selection ((t :foreground "#ff79c6" :background "#513D6B" :underline nil :bold t)))
 ;;    `(font-lock-variable-name-face ((t :foreground "#f1fa8c")))
 ;;    `(font-lock-string-face ((t :foreground "#ffb86c")))
 ;;    `(enh-ruby-string-delimiter-face ((t :foreground "#ffb86c")))
@@ -808,13 +827,17 @@ Has no effect when `persp-show-modestring' is nil."
    `(widget-field ((t :background "#282c34")))
    `(magit-section-highlight ((t :background "#354A59")))
    `(magit-diff-file-heading-highlight ((t :foreground "#c678dd" :background "#354A59")))
-   `(magit-diff-hunk-heading-highlight ((t :background "#354A59" :foreground "#c678dd")))
+   `(magit-diff-hunk-heading-highlight ((t :background "#354A59" :foreground "#a9a1e1")))
    `(magit-diff-hunk-heading ((t :foreground "#a9a1e1")))
    `(magit-diff-added ((t :background "#282c34")))
    `(magit-diff-added-highlight ((t :background "#21242b" :weight normal)))
    `(magit-diff-removed ((t :background "#282c34")))
    `(magit-diff-removed-highlight ((t :background "#21242b" :weight normal)))
-   `(smerge-refined-removed ((t :background "#A44646")))
+   `(smerge-refined-removed ((t :underline t)))
+   `(smerge-refined-added ((t :foreground "#98BE65" :underline t)))
+   ;; `(smerge-mine ((t :background "#52305D")))
+   ;; `(smerge-other ((t :background "#33431C")))
+   `(smerge-markers ((t :foreground "#c678dd" :background "#354A59")))
    `(highlight ((t :foreground "#ff6c6b" :background "#282c34" :underline t)))
    `(helm-selection ((t :foreground "#51afef" :background "#2E4651" :underline t)))
    `(company-preview ((t :foreground "#5B6268" :background "#21242b")))
@@ -825,6 +848,13 @@ Has no effect when `persp-show-modestring' is nil."
    `(sp-show-pair-match-face ((t :foreground "#1B2229" :background "#ff6c6b")))
    `(sp-show-pair-mismatch-face ((t :foreground "#ff6c6b" :background "#1B2229")))
    )
+  )
+
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode)
+  :config
+  (setq doom-modeline-buffer-file-name-style 'truncate-with-project)
   )
 
 ;; (use-package color-theme-sanityinc-tomorrow
@@ -847,8 +877,8 @@ Has no effect when `persp-show-modestring' is nil."
 ;;    `(smerge-mine ((t :foreground "#718c00" :background "#efefef")))
 ;;    `(smerge-other ((t :foreground "#8959a8" :background "#efefef")))
 ;;    `(smerge-markers ((t :foreground "#8959a8" :background "#d6d6d6")))
-;;    `(magit-diff-hunk-heading ((t :foreground "#8959a8")))
-;;    `(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#EFEFEF")))
+;;    `(magit-diff-hunk-heading ((t :foreground "#8959a8" :background "#EFEFEF")))
+;;    `(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#d6d6d6")))
 ;;    `(web-mode-html-attr-name-face ((t :foreground "#8959a8")))
 ;;    `(web-mode-html-tag-face ((t :foreground "#718c00")))
 ;;    `(persp-selected-face ((t :foreground "#3e999f" :weight bold)))
