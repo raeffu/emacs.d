@@ -20,8 +20,6 @@
  '(ag-highlight-search t)
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
- '(ansi-color-names-vector
-   (vector "#4d4d4c" "#c82829" "#718c00" "#eab700" "#4271ae" "#8959a8" "#3e999f" "#d6d6d6"))
  '(async-bytecomp-package-mode t)
  '(blink-cursor-mode nil)
  '(c-basic-offset 2)
@@ -38,7 +36,9 @@
  '(company-tooltip-flip-when-above t)
  '(company-tooltip-minimum-width 27)
  '(company-transformers nil)
+ '(css-indent-offset 2)
  '(current-language-environment "UTF-8")
+ '(custom-buffer-indent 2)
  '(custom-enabled-themes (quote (sanityinc-tomorrow-day)))
  '(custom-safe-themes
    (quote
@@ -48,13 +48,14 @@
  '(enh-ruby-bounce-deep-indent t)
  '(enh-ruby-deep-indent-paren nil)
  '(fci-rule-color "#d6d6d6")
+ '(flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
  '(flycheck-reekrc ".reek")
  '(flycheck-rubocop-lint-only t)
  '(font-lock-global-modes (quote (not speedbar-mode)))
  '(frame-background-mode (quote dark))
  '(global-company-mode t)
  '(global-hl-line-mode t)
- '(global-page-break-lines-mode t)
+ '(global-page-break-lines-mode t nil (page-break-lines))
  '(global-whitespace-cleanup-mode nil)
  '(global-whitespace-mode nil)
  '(global-whitespace-newline-mode nil)
@@ -87,19 +88,21 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (sass-mode doom-modeline buffer-move flycheck tide json-mode emojify wgrep doom-themes all-the-icons color-theme-sanityinc-tomorrow xref-js2 color-theme-sanityinc-solarized persp-mode persp-projectile helm helm-core prettier-js add-node-modules-path whitespace-mode csv-mode dracula-theme moe-theme alchemist solarized-theme cmake-mode ess matlab-mode zoom-window ace-jump-mode yaml-mode whitespace-cleanup-mode web-mode use-package typescript-mode smartparens rubocop rbenv rainbow-mode rainbow-delimiters page-break-lines overseer markdown-mode macrostep karma js2-refactor ibuffer-projectile highlight-numbers helm-swoop helm-projectile helm-flycheck helm-descbinds helm-ag exec-path-from-shell erlang enh-ruby-mode emmet-mode elisp-slime-nav drag-stuff default-text-scale company coffee-mode cask-mode ag)))
+    (helm-flycheck projectile tramp perspective elixir-mode scss-mode magit js2-mode f rspec-mode yasnippet gitignore-mode apache-mode dockerfile-mode dockerfile-mod sass-mode doom-modeline buffer-move flycheck tide json-mode emojify wgrep doom-themes all-the-icons color-theme-sanityinc-tomorrow xref-js2 color-theme-sanityinc-solarized persp-mode persp-projectile helm helm-core prettier-js add-node-modules-path whitespace-mode csv-mode dracula-theme moe-theme alchemist solarized-theme cmake-mode ess matlab-mode zoom-window ace-jump-mode yaml-mode whitespace-cleanup-mode web-mode use-package typescript-mode smartparens rubocop rbenv rainbow-mode rainbow-delimiters page-break-lines overseer markdown-mode macrostep karma js2-refactor ibuffer-projectile highlight-numbers helm-swoop helm-projectile helm-descbinds helm-ag exec-path-from-shell erlang enh-ruby-mode emmet-mode elisp-slime-nav drag-stuff default-text-scale company coffee-mode cask-mode ag)))
  '(projectile-globally-ignored-directories
    (quote
     ("vendor/bundle" ".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "_build" ".cask" "deps" "node_modules" "lib/elixir/_build")))
  '(rbenv-show-active-ruby-in-modeline nil)
  '(safe-local-variable-values
    (quote
-    ((rspec-docker-container . shared)
+    ((rspec-use-docker-when-possible . t)
+     (rspec-docker-container . shared)
      (rspec-docker-container . persp)
      (rspec-docker-container . perspectives)
      (rspec-docker-container . app))))
  '(selection-coding-system (quote utf-8))
  '(typescript-indent-level 2)
+ '(user-mail-address "raeffu@raeffu.ch")
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
@@ -122,6 +125,7 @@
      (340 . "#eab700")
      (360 . "#718c00"))))
  '(vc-annotate-very-old-color nil)
+ '(web-mode-attr-indent-offset 2)
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
  '(web-mode-markup-indent-offset 2)
@@ -138,7 +142,6 @@
  '(fringe ((t :foreground "#bbc2cf" :background "#282c34")))
  '(helm-ff-dotted-directory ((t (:inherit helm-ff-directory))))
  '(helm-selection ((t :foreground "#51afef" :background "#2E4651" :underline t)))
- '(highlight ((t :background "#F6E8E8")))
  '(hl-line ((t :background "#354A59")))
  '(linum ((t :weight medium :slant normal :foreground "#bbc2cf" :background "#282c34")))
  '(magit-diff-added ((t :background "#282c34")))
@@ -150,17 +153,11 @@
  '(magit-diff-removed-highlight ((t :background "#21242b" :weight normal)))
  '(magit-section-highlight ((t :background "#354A59")))
  '(markdown-header-face-1 ((t (:inherit markdown-header-face :weight bold))))
- '(match ((t :background "#ffffff" :foreground "#F52791" :inverse-video t)))
  '(region ((t :background "#2257A0")))
  '(smerge-markers ((t :foreground "#c678dd" :background "#354A59")))
  '(smerge-refined-added ((t :foreground "#98BE65" :underline t)))
- '(smerge-refined-removed ((t :underline t)))
- '(sp-show-pair-match-face ((t :foreground "#1B2229" :background "#ff6c6b")))
- '(sp-show-pair-mismatch-face ((t :foreground "#ff6c6b" :background "#1B2229")))
- '(tooltip ((t :foreground "#bbc2cf" :background "#23272e" :inverse-video nil)))
- '(web-mode-html-attr-name-face ((t :foreground "#8959a8")))
- '(web-mode-html-tag-face ((t :foreground "#718c00")))
- '(widget-field ((t :background "#282c34"))))
+ '(smerge-refined-removed ((t :foreground "#ff6c6b" :underline t)))
+ '(tooltip ((t :foreground "#bbc2cf" :background "#23272e" :inverse-video nil))))
 
 ;; open zsh scripts with syntax highlighting
 (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))

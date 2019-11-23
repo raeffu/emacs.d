@@ -44,7 +44,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'diminish)
+;;(require 'diminish)
 (require 'bind-key)
 
 ;; Customization
@@ -143,6 +143,9 @@
 
 (server-start) ;; Allow this Emacs process to be a server for client processes.
 
+(use-package diminish
+  :ensure t)
+
 (use-package page-break-lines           ; Turn page breaks into lines
   :ensure t
   :init (global-page-break-lines-mode)
@@ -228,9 +231,6 @@
   :load-path "~/Projects/tester.el"
   :commands (tester-run-test-file tester-run-test-suite))
 
-(use-package helm-core
-  :ensure t)
-
 (use-package helm
   :ensure t
   :bind (("M-a" . helm-M-x)
@@ -311,11 +311,6 @@
   (add-to-list 'helm-info-default-sources
                'helm-source-info-emacs))
 
-(use-package helm-projectile
-  :ensure t
-  :config
-  (helm-projectile-on))
-
 (use-package winner                     ; Undo and redo window configurations
   :init (winner-mode))
 
@@ -330,8 +325,6 @@
   (dolist (mode '(magit-mode magit-log-mode))
     (add-to-list 'desktop-modes-not-to-save mode))
   (add-to-list 'desktop-files-not-to-save (rx bos "COMMIT_EDITMSG")))
-
-(global-git-commit-mode t)
 
 ;; (use-package autorevert                 ; Auto-revert buffers of changed files
 ;;   :init (global-auto-revert-mode)
@@ -359,6 +352,9 @@
                     (unless (eq ibuffer-sorting-mode 'alphabetic)
                       (ibuffer-do-sort-by-alphabetic)))))
 
+(use-package perspective
+  :ensure t)
+
 (use-package projectile
   :ensure t
   :bind (("C-p s" . projectile-persp-switch-project))
@@ -366,7 +362,6 @@
   (setq projectile-completion-system 'helm
         projectile-indexing-method 'alien)
   (projectile-global-mode)
-  (helm-projectile-on)
   (setq projectile-enable-caching nil)
   :diminish (projectile-mode))
 
@@ -381,22 +376,25 @@
   :bind (("C-p s" . projectile-persp-switch-project))
   :config
   (persp-mode)
-  (setq persp-show-modestring t)
-  (defun persp-format-name (name)
-    "Format the perspective name given by NAME for display in `persp-modestring'."
-    (let ((string-name (format "%s" name)))
-      (if (equal name (persp-name persp-curr))
-          (propertize string-name 'face 'persp-selected-face))))
+  ;; (setq persp-show-modestring t)
+  ;; (defun persp-format-name (name)
+  ;;   "Format the perspective name given by NAME for display in `persp-modestring'."
+  ;;   (let ((string-name (format "%s" name)))
+  ;;     (if (equal name (persp-name persp-curr))
+  ;;         (propertize string-name 'face 'persp-selected-face))))
 
-  (defun persp-update-modestring ()
-    "Update `persp-modestring' to reflect the current perspectives.
-Has no effect when `persp-show-modestring' is nil."
-    (when persp-show-modestring
-      (setq persp-modestring
-	    (append '("[")
-		    (persp-intersperse (mapcar 'persp-format-name (persp-names)) "")
-		    '("]")))))
+;;   (defun persp-update-modestring ()
+;;     "Update `persp-modestring' to reflect the current perspectives.
+;; Has no effect when `persp-show-modestring' is nil."
+;;     (when persp-show-modestring
+;;       (setq persp-modestring
+;; 	    (append '("[")
+;; 		    (persp-intersperse (mapcar 'persp-format-name (persp-names)) "")
+;; 		    '("]")))))
   )
+
+(use-package helm-projectile
+  :ensure t)
 
 (use-package zoom-window
   :ensure t
@@ -409,8 +407,8 @@ Has no effect when `persp-show-modestring' is nil."
   :ensure t
   :defer t
   :config
-  (setq yas-snippet-dirs "~/.emacs.d/snippets")
   (yas-global-mode 1)
+  ;; (setq yas-snippet-dirs "~/.emacs.d/snippets")
   :diminish (yas-minor-mode . " YS"))
 
 (add-to-list 'load-path "~/.emacs.d/elpa/Enhanced-Ruby-Mode")
@@ -575,7 +573,7 @@ Has no effect when `persp-show-modestring' is nil."
              setq company-tooltip-align-annotations t
                   tide-format-options '(:insertSpaceAfterFunctionKeywordForAnonymousFunctions t :placeOpenBraceOnNewLineForFunctions nil))
             )
-  (flycheck-add-next-checker 'typescript-tide 'javascript-eslint 'append)
+  (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)
   :init (add-hook 'typescript-mode-hook (lambda()
                                           (flycheck-mode +1)
                                           (setq flycheck-check-syntax-automatically '(save mode-enabled))
@@ -643,7 +641,8 @@ Has no effect when `persp-show-modestring' is nil."
   :ensure t
   :config
   (setq typescript-indent-level 2)
-  (yas-global-mode 1))
+ ;; (yas-global-mode 1)
+  )
 
 (use-package coffee-mode
   :ensure t
@@ -688,11 +687,14 @@ Has no effect when `persp-show-modestring' is nil."
                           'magit-insert-unpushed-to-upstream
                           'magit-insert-unpushed-to-upstream-or-recent
                           'replace)
+  (global-git-commit-mode t)
   )
 
 (use-package yaml-mode
   :ensure t
-  :mode ("\\.ya?ml\\'" . yaml-mode))
+  :mode (("\\.ya?ml.example\\'" . yaml-mode)
+         ("\\.travis.ya?ml\\'" . yaml-mode)
+         ("\\.ya?ml\\'" . yaml-mode)))
 
 (use-package emmet-mode
   :ensure t
@@ -739,8 +741,8 @@ Has no effect when `persp-show-modestring' is nil."
 ;; 	    (nyan-start-animation)
 ;; 	    (nyan-toggle-wavy-trail)))
 
-(use-package matlab-mode
-  :ensure t)
+;; (use-package matlab-mode
+;;   :ensure t)
 
 ;;(use-package ess
 ;;  :ensure t)
@@ -790,6 +792,16 @@ Has no effect when `persp-show-modestring' is nil."
          ("<C-right>" . buf-move-right))
   :ensure t)
 
+(use-package dockerfile-mode
+  :ensure t
+  :mode ("Dockerfile\\'" . dockerfile-mode))
+
+(use-package apache-mode
+  :ensure t)
+
+(use-package gitignore-mode
+  :ensure t
+  :mode ("\\.gitignore" . gitignore-mode))
 ;; Themes
 
 ;; (use-package moe-theme
@@ -813,9 +825,8 @@ Has no effect when `persp-show-modestring' is nil."
 ;;   :ensure t)
 
 (use-package doom-themes
-  :init
-  (load-theme 'doom-one t)
-  :config
+  :ensure t
+  :init (load-theme 'doom-one t)
   (progn
     (doom-themes-neotree-config)
     (setq doom-neotree-line-spacing 0)
@@ -824,7 +835,6 @@ Has no effect when `persp-show-modestring' is nil."
    `(hl-line ((t :background "#354A59")))
    `(linum ((t :weight medium :slant normal :foreground "#bbc2cf" :background "#282c34")))
    `(fringe ((t :foreground "#bbc2cf" :background "#282c34")))
-   `(widget-field ((t :background "#282c34")))
    `(magit-section-highlight ((t :background "#354A59")))
    `(magit-diff-file-heading-highlight ((t :foreground "#c678dd" :background "#354A59")))
    `(magit-diff-hunk-heading-highlight ((t :background "#354A59" :foreground "#a9a1e1")))
@@ -833,20 +843,15 @@ Has no effect when `persp-show-modestring' is nil."
    `(magit-diff-added-highlight ((t :background "#21242b" :weight normal)))
    `(magit-diff-removed ((t :background "#282c34")))
    `(magit-diff-removed-highlight ((t :background "#21242b" :weight normal)))
-   `(smerge-refined-removed ((t :underline t)))
+   `(smerge-refined-removed ((t :foreground "#ff6c6b" :underline t)))
    `(smerge-refined-added ((t :foreground "#98BE65" :underline t)))
-   ;; `(smerge-mine ((t :background "#52305D")))
-   ;; `(smerge-other ((t :background "#33431C")))
    `(smerge-markers ((t :foreground "#c678dd" :background "#354A59")))
-   `(highlight ((t :foreground "#ff6c6b" :background "#282c34" :underline t)))
    `(helm-selection ((t :foreground "#51afef" :background "#2E4651" :underline t)))
    `(company-preview ((t :foreground "#5B6268" :background "#21242b")))
    `(tooltip ((t :foreground "#bbc2cf" :background "#23272e" :inverse-video nil)))
    `(company-tooltip ((t :inherit 'tooltip :background nil)))
    `(company-tooltip-selection ((t :weight bold :inverse-video nil :foreground "#8e908c" :background "#2257A0")))
    `(region ((t :background "#2257A0")))
-   `(sp-show-pair-match-face ((t :foreground "#1B2229" :background "#ff6c6b")))
-   `(sp-show-pair-mismatch-face ((t :foreground "#ff6c6b" :background "#1B2229")))
    )
   )
 
