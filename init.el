@@ -376,7 +376,7 @@
   :bind (("C-p s" . projectile-persp-switch-project))
   :config
   (persp-mode)
-  ;; (setq persp-show-modestring t)
+  (setq persp-show-modestring nil)
   ;; (defun persp-format-name (name)
   ;;   "Format the perspective name given by NAME for display in `persp-modestring'."
   ;;   (let ((string-name (format "%s" name)))
@@ -532,7 +532,7 @@
 
 (defun maybe-use-prettier ()
   "Enable prettier-js-mode if an rc file is located."
-  (if (locate-dominating-file default-directory "prettier.config.js")
+  (if (locate-dominating-file default-directory ".prettierrc.js")
       (prettier-js-mode +1)))
 
 (use-package prettier-js
@@ -860,6 +860,7 @@
   :init (doom-modeline-mode)
   :config
   (setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+  (setq doom-modeline-persp-name nil)
   )
 
 ;; (use-package color-theme-sanityinc-tomorrow
