@@ -63,6 +63,7 @@
  '(grep-find-ignored-directories
    (quote
     (".cask" "node_modules" "SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "tmp" "log")))
+ '(grip-github-user "raeffu")
  '(helm-ag-command-option "--path-to-agignore ~/.agignore" t)
  '(helm-ag-fuzzy-match t t)
  '(helm-ag-insert-at-point (quote symbol) t)
@@ -89,7 +90,7 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (helm-flycheck projectile tramp perspective elixir-mode scss-mode magit js2-mode f rspec-mode yasnippet gitignore-mode apache-mode dockerfile-mode dockerfile-mod sass-mode doom-modeline buffer-move flycheck tide json-mode emojify wgrep doom-themes all-the-icons color-theme-sanityinc-tomorrow xref-js2 color-theme-sanityinc-solarized persp-mode persp-projectile helm helm-core prettier-js add-node-modules-path whitespace-mode csv-mode dracula-theme moe-theme alchemist solarized-theme cmake-mode ess matlab-mode zoom-window ace-jump-mode yaml-mode whitespace-cleanup-mode web-mode use-package typescript-mode smartparens rubocop rbenv rainbow-mode rainbow-delimiters page-break-lines overseer markdown-mode macrostep karma js2-refactor ibuffer-projectile highlight-numbers helm-swoop helm-projectile helm-descbinds helm-ag exec-path-from-shell erlang enh-ruby-mode emmet-mode elisp-slime-nav drag-stuff default-text-scale company coffee-mode cask-mode ag)))
+    (grip-mode flymd helm-flycheck projectile tramp perspective elixir-mode scss-mode magit js2-mode f rspec-mode yasnippet gitignore-mode apache-mode dockerfile-mode dockerfile-mod sass-mode doom-modeline buffer-move flycheck tide json-mode emojify wgrep doom-themes all-the-icons color-theme-sanityinc-tomorrow xref-js2 color-theme-sanityinc-solarized persp-mode persp-projectile helm helm-core prettier-js add-node-modules-path whitespace-mode csv-mode dracula-theme moe-theme alchemist solarized-theme cmake-mode ess matlab-mode zoom-window ace-jump-mode yaml-mode whitespace-cleanup-mode web-mode use-package typescript-mode smartparens rubocop rbenv rainbow-mode rainbow-delimiters page-break-lines overseer markdown-mode macrostep karma js2-refactor ibuffer-projectile highlight-numbers helm-swoop helm-projectile helm-descbinds helm-ag exec-path-from-shell erlang enh-ruby-mode emmet-mode elisp-slime-nav drag-stuff default-text-scale company coffee-mode cask-mode ag)))
  '(persp-mode t)
  '(persp-show-modestring nil)
  '(projectile-globally-ignored-directories
@@ -97,9 +98,17 @@
     ("vendor/bundle" ".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "_build" ".cask" "deps" "node_modules" "lib/elixir/_build")))
  '(projectile-mode t nil (projectile))
  '(rbenv-show-active-ruby-in-modeline nil)
+ '(rspec-docker-command "docker-compose exec")
+ '(rspec-docker-container "app")
+ '(rspec-docker-cwd "/app/server/")
+ '(rspec-docker-wrapper-fn (quote rspec--docker-eosce-anal-wrapper))
+ '(rspec-use-docker-when-possible 1)
  '(safe-local-variable-values
    (quote
-    ((rspec-use-docker-when-possible . t)
+    ((rspec-docker-wrapper-fn . rspec--docker-eosce-anal-wrapper)
+     (rspec-docker-cwd . "/app/server/")
+     (rspec-docker-cwd . /app/server/)
+     (rspec-use-docker-when-possible . t)
      (rspec-docker-container . shared)
      (rspec-docker-container . persp)
      (rspec-docker-container . perspectives)
@@ -143,6 +152,7 @@
  '(company-preview ((t :foreground "#5B6268" :background "#21242b")))
  '(company-tooltip ((t :inherit (quote tooltip) :background nil)))
  '(company-tooltip-selection ((t :weight bold :inverse-video nil :foreground "#8e908c" :background "#2257A0")))
+ '(font-lock-comment-face ((t :foreground "#73797e")))
  '(fringe ((t :foreground "#bbc2cf" :background "#282c34")))
  '(helm-ff-dotted-directory ((t (:inherit helm-ff-directory))))
  '(helm-selection ((t :foreground "#51afef" :background "#2E4651" :underline t)))
@@ -151,8 +161,8 @@
  '(magit-diff-added ((t :background "#282c34")))
  '(magit-diff-added-highlight ((t :background "#21242b" :weight normal)))
  '(magit-diff-file-heading-highlight ((t :foreground "#c678dd" :background "#354A59")))
- '(magit-diff-hunk-heading ((t :foreground "#8959a8")))
- '(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#EFEFEF")))
+ '(magit-diff-hunk-heading ((t :foreground "#a9a1e1")))
+ '(magit-diff-hunk-heading-highlight ((t :background "#354A59" :foreground "#a9a1e1")))
  '(magit-diff-removed ((t :background "#282c34")))
  '(magit-diff-removed-highlight ((t :background "#21242b" :weight normal)))
  '(magit-section-highlight ((t :background "#354A59")))

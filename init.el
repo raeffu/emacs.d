@@ -248,6 +248,7 @@
               ("M-h" . helm-beginning-of-buffer)
               ("M-H" . helm-end-of-buffer)
               ("<tab>" . helm-execute-persistent-action)
+              ("C-z" . helm-select-action)
               ("C-i" . helm-execute-persistent-action))
   :config (progn
             (setq helm-buffers-fuzzy-matching t)
@@ -394,7 +395,8 @@
   )
 
 (use-package helm-projectile
-  :ensure t)
+  :ensure t
+  :bind (("M-t" . helm-projectile-find-file)))
 
 (use-package zoom-window
   :ensure t
@@ -410,6 +412,18 @@
   (yas-global-mode 1)
   ;; (setq yas-snippet-dirs "~/.emacs.d/snippets")
   :diminish (yas-minor-mode . " YS"))
+
+(use-package rspec-mode
+  :ensure t
+  :defer t
+  :config (progn
+            (defun rspec-ruby-mode-hook ()
+              (tester-init-test-run #'rspec-run-single-file "_spec.rb$")
+              (tester-init-test-suite-run #'rake-test))            
+            (add-hook 'enh-ruby-mode-hook 'rspec-ruby-mode-hook)
+            (yas-global-mode 1))
+  :bind (("C-c , s" . rspec-verify-single)
+         ("C-c , v" . rspec-verify)))
 
 (add-to-list 'load-path "~/.emacs.d/elpa/Enhanced-Ruby-Mode")
 (use-package enh-ruby-mode
@@ -430,27 +444,17 @@
                   enh-ruby-deep-indent-paren nil
                   enh-ruby-bounce-deep-indent t
                   enh-ruby-hanging-indent-level 2)
-            (setq ruby-insert-encoding-magic-comment nil)))
+            (setq ruby-insert-encoding-magic-comment nil)
+            (defun rspec--docker-eosce-anal-wrapper (rspec-docker-command rspec-docker-container command)
+              "Function for wrapping a command for execution inside a dockerized environment. "
+              (format "%s %s sh -c \"%s && %s\"" rspec-docker-command rspec-docker-container "cd /app/server/" command))
+            (setq rspec-use-docker-when-possible 1)
+            (setq rspec-docker-command "docker-compose exec")))
 
 (use-package rubocop
   :ensure t
   :defer t
   :init (add-hook 'ruby-mode-hook 'rubocop-mode))
-
-(use-package rspec-mode
-  :ensure t
-  :defer t
-  :config (progn
-            (defun rspec-ruby-mode-hook ()
-              (tester-init-test-run #'rspec-run-single-file "_spec.rb$")
-              (tester-init-test-suite-run #'rake-test))
-            (add-hook 'enh-ruby-mode-hook 'rspec-ruby-mode-hook)
-            (setq rspec-use-docker-when-possible 1)
-            (setq rspec-docker-command "docker-compose exec")
-            (setq rspec-docker-container "server")
-            (yas-global-mode 1))
-  :bind (("C-c , s" . rspec-verify-single)
-         ("C-c , v" . rspec-verify)))
 
 (setq exec-path (cons (expand-file-name "~/.rbenv/shims") exec-path))
 
@@ -495,7 +499,7 @@
       ;; environment variables are mostly set in `.zprofile'.
       (setq exec-path-from-shell-arguments '("-l")))
 
-    (dolist (var '("EMAIL" "INFOPATH" "JAVA_OPTS"))
+    (dolist (var '("EMAIL" "INFOPATH" "JAVA_OPTS" "GITHUB_PAT"))
       (add-to-list 'exec-path-from-shell-variables var))
 
     (exec-path-from-shell-initialize)
@@ -510,6 +514,7 @@
       (dolist (dir (nreverse (parse-colon-path (getenv "INFOPATH"))))
         (when dir
           (add-to-list 'Info-directory-list dir))))))
+
 
 (use-package default-text-scale
   :ensure t)
@@ -639,6 +644,7 @@
 
 (use-package typescript-mode
   :ensure t
+  :load-path "~/.emacs.d/elpa/typescript-mode-20191025.1425"
   :config
   (setq typescript-indent-level 2)
  ;; (yas-global-mode 1)
@@ -731,7 +737,16 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
+(use-package grip-mode
+  :ensure t
+  :bind (:map markdown-mode-command-map
+              ("g" . grip-mode))
+  :config
+  (setq grip-github-user "raeffu")
+  (setq grip-github-password (getenv "GITHUB_PAT")))
+
 (use-package ace-jump-mode
+  :ensure t
   :bind ("C-c SPC" . ace-jump-mode))
 
 ;; (use-package nyan-mode
@@ -744,8 +759,8 @@
 ;; (use-package matlab-mode
 ;;   :ensure t)
 
-;;(use-package ess
-;;  :ensure t)
+(use-package ess
+ :ensure t)
 
 (use-package csv-mode
   :ensure t)
@@ -804,26 +819,6 @@
   :mode ("\\.gitignore" . gitignore-mode))
 ;; Themes
 
-;; (use-package moe-theme
-;;   :ensure t
-;;   :config (moe-dark))
-
-;; (use-package dracula-theme
-;;   :config
-;;   (setf custom-safe-themes t)
-;;   (setq zoom-window-mode-line-color "#ff79c6")
-;;   (setq ansi-color-names-vector (vector "#515151" "#ff6e67" "#50fa7b" "#f1fa8c" "#0189cc" "#bd93f9" "#8be9fd" "#ccccc7"))
-;;   (custom-set-faces
-;;    `(magit-diff-hunk-heading-highlight ((t :foreground "#ff79c6" :background "#515151")))
-;;    `(helm-selection ((t :foreground "#ff79c6" :background "#513D6B" :underline nil :bold t)))
-;;    `(font-lock-variable-name-face ((t :foreground "#f1fa8c")))
-;;    `(font-lock-string-face ((t :foreground "#ffb86c")))
-;;    `(enh-ruby-string-delimiter-face ((t :foreground "#ffb86c")))
-;; ))
-
-;; (use-package all-the-icons
-;;   :ensure t)
-
 (use-package doom-themes
   :ensure t
   :init (load-theme 'doom-one t)
@@ -852,8 +847,18 @@
    `(company-tooltip ((t :inherit 'tooltip :background nil)))
    `(company-tooltip-selection ((t :weight bold :inverse-video nil :foreground "#8e908c" :background "#2257A0")))
    `(region ((t :background "#2257A0")))
+   `(font-lock-comment-face ((t :foreground "#73797e")))
    )
   )
+
+;; (use-package doom-themes
+;;   :ensure t
+;;   :init (load-theme 'doom-one-light t)
+;;   (progn
+;;     (doom-themes-neotree-config)
+;;     (setq doom-neotree-line-spacing 0)
+;;     (doom-themes-org-config))
+;;   )
 
 (use-package doom-modeline
   :ensure t
@@ -862,37 +867,6 @@
   (setq doom-modeline-buffer-file-name-style 'truncate-with-project)
   (setq doom-modeline-persp-name nil)
   )
-
-;; (use-package color-theme-sanityinc-tomorrow
-;;   :config
-;;   (setf custom-safe-themes t)
-;;   (setq zoom-window-mode-line-color "#eab700")
-;;   (color-theme-sanityinc-tomorrow-eighties)
-;;   (custom-set-faces
-;;    `(persp-selected-face ((t :foreground "#3e999f" :weight bold)))
-;;    `(highlight ((t :background "#5B284F")))
-;;    )
-;;   )
-
-;; (use-package color-theme-sanityinc-tomorrow
-;;   :config
-;;   (setf custom-safe-themes t)
-;;   (setq zoom-window-mode-line-color "#ff79c6")
-;;   (color-theme-sanityinc-tomorrow-day)
-;;   (custom-set-faces
-;;    `(smerge-mine ((t :foreground "#718c00" :background "#efefef")))
-;;    `(smerge-other ((t :foreground "#8959a8" :background "#efefef")))
-;;    `(smerge-markers ((t :foreground "#8959a8" :background "#d6d6d6")))
-;;    `(magit-diff-hunk-heading ((t :foreground "#8959a8" :background "#EFEFEF")))
-;;    `(magit-diff-hunk-heading-highlight ((t :foreground "#8959a8" :background "#d6d6d6")))
-;;    `(web-mode-html-attr-name-face ((t :foreground "#8959a8")))
-;;    `(web-mode-html-tag-face ((t :foreground "#718c00")))
-;;    `(persp-selected-face ((t :foreground "#3e999f" :weight bold)))
-;;    `(highlight ((t :background "#F6E8E8")))
-;;    `(dired-directory ((t :foreground "#3e999f")))
-;;    `(match ((t :background "#ffffff" :foreground "#F52791" :inverse-video t)))
-;;    )
-;;   )
 
 (provide 'init)
 

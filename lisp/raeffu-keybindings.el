@@ -139,8 +139,8 @@
 (global-set-key (kbd "C-M-j")  'textmate-shift-left)
 (global-set-key (kbd "C-c C-w") 'whitespace-mode)
 
-(global-unset-key (kbd "M-t"))
-(global-set-key (kbd "M-t") 'projectile-find-file)
+;; (global-unset-key (kbd "M-t"))
+;; (global-set-key (kbd "M-t") 'projectile-find-file)
 
 (global-set-key (kbd "C-c c") 'org-capture)
 (global-set-key (kbd "C-x M-r") 'ruby-compilation-this-buffer)
@@ -250,6 +250,7 @@
  ("C-c m r" . smerge-resolve)
  ("C-c m n" . smerge-next)
  ("C-c m p" . smerge-prev)
+ ("C-c m a" . smerge-keep-all)
  )
 
 ;; swap `transpose-chars' key with `transpose-lines'
