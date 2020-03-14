@@ -3,9 +3,9 @@
  (magit-branch nil)
  (magit-commit nil)
  (magit-diff
+  ("--no-ext-diff" "--stat")
   (("--" "server/Gemfile"))
   (("--" "app/assets/stylesheets/structure/_progress.sass"))
-  ("--no-ext-diff" "--stat")
   ("--no-ext-diff"))
  (magit-dispatch nil)
  (magit-fetch nil)
@@ -15,8 +15,9 @@
  (magit-pull
   ("--rebase")
   nil)
- (magit-push nil
-             ("--force-with-lease"))
+ (magit-push
+  ("--force-with-lease")
+  nil)
  (magit-rebase
   ("--interactive")
   nil)
