@@ -48,7 +48,6 @@
  '(doom-modeline-vcs-max-length 50)
  '(enh-ruby-bounce-deep-indent t)
  '(enh-ruby-deep-indent-paren nil)
- '(fci-rule-color "#d6d6d6")
  '(flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
  '(flycheck-reekrc ".reek")
  '(flycheck-rubocop-lint-only t)
@@ -64,8 +63,8 @@
    (quote
     (".cask" "node_modules" "SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "tmp" "log")))
  '(grip-github-user "raeffu")
- '(helm-ag-fuzzy-match t)
- '(helm-ag-insert-at-point (quote symbol))
+ '(helm-ag-fuzzy-match t t)
+ '(helm-ag-insert-at-point (quote symbol) t)
  '(helm-buffer-max-length nil)
  '(helm-buffers-fuzzy-matching t)
  '(helm-ff-file-name-history-use-recentf t)
@@ -89,22 +88,26 @@
  '(package-enable-at-startup nil)
  '(package-selected-packages
    (quote
-    (grip-mode flymd helm-flycheck projectile tramp perspective elixir-mode scss-mode magit js2-mode f rspec-mode yasnippet gitignore-mode apache-mode dockerfile-mode dockerfile-mod sass-mode doom-modeline buffer-move flycheck tide json-mode emojify wgrep doom-themes all-the-icons color-theme-sanityinc-tomorrow xref-js2 color-theme-sanityinc-solarized persp-mode persp-projectile helm helm-core prettier-js add-node-modules-path whitespace-mode csv-mode dracula-theme moe-theme alchemist solarized-theme cmake-mode ess matlab-mode zoom-window ace-jump-mode yaml-mode whitespace-cleanup-mode web-mode use-package typescript-mode smartparens rubocop rbenv rainbow-mode rainbow-delimiters page-break-lines overseer markdown-mode macrostep karma js2-refactor ibuffer-projectile highlight-numbers helm-swoop helm-projectile helm-descbinds helm-ag exec-path-from-shell erlang enh-ruby-mode emmet-mode elisp-slime-nav drag-stuff default-text-scale company coffee-mode cask-mode ag)))
+    (diff-hl magit grip-mode flymd helm-flycheck projectile tramp perspective elixir-mode scss-mode js2-mode f rspec-mode yasnippet gitignore-mode apache-mode dockerfile-mode dockerfile-mod sass-mode doom-modeline buffer-move flycheck tide json-mode emojify wgrep all-the-icons color-theme-sanityinc-tomorrow xref-js2 color-theme-sanityinc-solarized persp-mode persp-projectile helm helm-core prettier-js add-node-modules-path whitespace-mode csv-mode dracula-theme moe-theme alchemist solarized-theme cmake-mode ess matlab-mode zoom-window ace-jump-mode yaml-mode whitespace-cleanup-mode web-mode use-package typescript-mode smartparens rubocop rbenv rainbow-mode rainbow-delimiters page-break-lines overseer markdown-mode macrostep karma js2-refactor ibuffer-projectile highlight-numbers helm-swoop helm-projectile helm-descbinds helm-ag exec-path-from-shell erlang enh-ruby-mode emmet-mode elisp-slime-nav drag-stuff default-text-scale company coffee-mode cask-mode ag)))
  '(persp-mode t)
  '(persp-show-modestring nil)
  '(projectile-globally-ignored-directories
    (quote
-    ("vendor/bundle" ".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "_build" ".cask" "deps" "node_modules" "lib/elixir/_build")))
+    ("vendor/bundle" ".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "_build" ".cask" "deps" "node_modules" "lib/elixir/_build" "server/node_modules")))
  '(projectile-mode t nil (projectile))
  '(rbenv-show-active-ruby-in-modeline nil)
  '(rspec-docker-command "docker-compose exec")
- '(rspec-docker-container "app")
- '(rspec-docker-cwd "/app/server/")
- '(rspec-docker-wrapper-fn (quote rspec--docker-eosce-anal-wrapper))
+ '(rspec-docker-container "man_server")
+ '(rspec-docker-cwd "/app/")
+ '(rspec-docker-file-name "Dockerfile")
  '(rspec-use-docker-when-possible 1)
  '(safe-local-variable-values
    (quote
-    ((rspec-docker-wrapper-fn . rspec--docker-eosce-anal-wrapper)
+    ((rspec-docker-container . persp_server)
+     (rspec-docker-container . man_server)
+     (rspec-docker-cwd . "/app/")
+     (rspec-docker-wrapper-fn . rspec--docker-default-wrapper)
+     (rspec-docker-wrapper-fn . rspec--docker-eosce-anal-wrapper)
      (rspec-docker-cwd . "/app/server/")
      (rspec-docker-cwd . /app/server/)
      (rspec-use-docker-when-possible . t)
@@ -148,13 +151,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(comint-highlight-prompt ((t (:inherit nil))))
  '(company-preview ((t :foreground "#5B6268" :background "#21242b")))
  '(company-tooltip ((t :inherit (quote tooltip) :background nil)))
  '(company-tooltip-selection ((t :weight bold :inverse-video nil :foreground "#8e908c" :background "#2257A0")))
  '(font-lock-comment-face ((t :foreground "#73797e")))
- '(fringe ((t :foreground "#bbc2cf" :background "#282c34")))
+ '(fringe ((t :foreground "#bbc2cf" :background "#23272e")))
  '(helm-selection ((t :foreground "#51afef" :background "#2E4651" :underline t)))
  '(hl-line ((t :background "#354A59")))
+ '(lazy-highlight ((t :background "#9a60ab")))
  '(linum ((t :weight medium :slant normal :foreground "#bbc2cf" :background "#282c34")))
  '(magit-diff-added ((t :background "#282c34")))
  '(magit-diff-added-highlight ((t :background "#21242b" :weight normal)))
@@ -164,6 +169,7 @@
  '(magit-diff-removed ((t :background "#282c34")))
  '(magit-diff-removed-highlight ((t :background "#21242b" :weight normal)))
  '(magit-section-highlight ((t :background "#354A59")))
+ '(markdown-header-face ((t :foreground "#51afef")))
  '(region ((t :background "#2257A0")))
  '(smerge-markers ((t :foreground "#c678dd" :background "#354A59")))
  '(smerge-refined-added ((t :foreground "#98BE65" :underline t)))

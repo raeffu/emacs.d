@@ -62,6 +62,48 @@
 ;;(require 'raeffu-functions)
 (require 'raeffu-keybindings)
 
+(defun split-window-sensibly-prefer-horizontal (&optional window)
+"Based on split-window-sensibly, but designed to prefer a horizontal split,
+i.e. windows tiled side-by-side."
+  (let ((window (or window (selected-window))))
+    (or (and (window-splittable-p window t)
+         ;; Split window horizontally
+         (with-selected-window window
+           (split-window-right)))
+    (and (window-splittable-p window)
+         ;; Split window vertically
+         (with-selected-window window
+           (split-window-below)))
+    (and
+         ;; If WINDOW is the only usable window on its frame (it is
+         ;; the only one or, not being the only one, all the other
+         ;; ones are dedicated) and is not the minibuffer window, try
+         ;; to split it horizontally disregarding the value of
+         ;; `split-height-threshold'.
+         (let ((frame (window-frame window)))
+           (or
+            (eq window (frame-root-window frame))
+            (catch 'done
+              (walk-window-tree (lambda (w)
+                                  (unless (or (eq w window)
+                                              (window-dedicated-p w))
+                                    (throw 'done nil)))
+                                frame)
+              t)))
+     (not (window-minibuffer-p window))
+     (let ((split-width-threshold 0))
+       (when (window-splittable-p window t)
+         (with-selected-window window
+           (split-window-right))))))))
+
+(defun split-window-really-sensibly (&optional window)
+  (let ((window (or window (selected-window))))
+    (if (> (window-total-width window) (* 2 (window-total-height window)))
+        (with-selected-window window (split-window-sensibly-prefer-horizontal window))
+      (with-selected-window window (split-window-sensibly window)))))
+
+(setq split-window-preferred-function 'split-window-really-sensibly)
+
 (column-number-mode 1)
 
 (defun my-minibuffer-setup-hook ()
@@ -92,11 +134,11 @@
 (transient-mark-mode 1)
 ;; No blinking and beeping, no startup screen, no scratch message and short
 ;; Yes/No questions.
-(blink-cursor-mode 1)
+(blink-cursor-mode -1)
 (setq ring-bell-function #'ignore
       inhibit-startup-screen t
       echo-keystrokes 0.1
-      linum-format " %d"
+      linum-format " %d "
       initial-scratch-message "Howdy Partner!")
 
 (fset 'yes-or-no-p #'y-or-n-p)
@@ -124,6 +166,7 @@
 (set-keyboard-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
+(set-language-environment "UTF-8")
 
 ;; System setup
 
@@ -238,6 +281,7 @@
          ("C-x f" . helm-recentf)
          ("C-SPC" . helm-dabbrev)
          ("M-y" . helm-show-kill-ring)
+         ("M-p" . helm-projectile-ag)
          ("C-x b" . helm-buffers-list)
          ("C-c b" . helm-resume))
   :bind (:map helm-map
@@ -537,7 +581,7 @@
 
 (defun maybe-use-prettier ()
   "Enable prettier-js-mode if an rc file is located."
-  (if (locate-dominating-file default-directory ".prettierrc.js")
+  (if (or (locate-dominating-file default-directory ".prettierrc.js") (locate-dominating-file default-directory "prettier.config.js"))
       (prettier-js-mode +1)))
 
 (use-package prettier-js
@@ -737,14 +781,6 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package grip-mode
-  :ensure t
-  :bind (:map markdown-mode-command-map
-              ("g" . grip-mode))
-  :config
-  (setq grip-github-user "raeffu")
-  (setq grip-github-password (getenv "GITHUB_PAT")))
-
 (use-package ace-jump-mode
   :ensure t
   :bind ("C-c SPC" . ace-jump-mode))
@@ -814,10 +850,23 @@
 (use-package apache-mode
   :ensure t)
 
+(use-package grip-mode
+  :ensure t
+  :bind (:map markdown-mode-command-map
+              ("g" . grip-mode))
+  :config
+  (setq grip-github-user "raeffu"))
+
 (use-package gitignore-mode
   :ensure t
   :mode ("\\.gitignore" . gitignore-mode))
 ;; Themes
+
+(use-package diff-hl
+  :ensure t
+  :init
+  (global-diff-hl-mode)
+  (diff-hl-flydiff-mode))
 
 (use-package doom-themes
   :ensure t
@@ -829,7 +878,7 @@
   (custom-set-faces
    `(hl-line ((t :background "#354A59")))
    `(linum ((t :weight medium :slant normal :foreground "#bbc2cf" :background "#282c34")))
-   `(fringe ((t :foreground "#bbc2cf" :background "#282c34")))
+   `(fringe ((t :foreground "#bbc2cf" :background "#23272e")))
    `(magit-section-highlight ((t :background "#354A59")))
    `(magit-diff-file-heading-highlight ((t :foreground "#c678dd" :background "#354A59")))
    `(magit-diff-hunk-heading-highlight ((t :background "#354A59" :foreground "#a9a1e1")))
@@ -848,6 +897,8 @@
    `(company-tooltip-selection ((t :weight bold :inverse-video nil :foreground "#8e908c" :background "#2257A0")))
    `(region ((t :background "#2257A0")))
    `(font-lock-comment-face ((t :foreground "#73797e")))
+   `(lazy-highlight ((t :background "#9a60ab")))
+   `(markdown-header-face ((t :foreground "#51afef")))
    )
   )
 
@@ -864,7 +915,7 @@
   :ensure t
   :init (doom-modeline-mode)
   :config
-  (setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+  (setq doom-modeline-buffer-file-name-style 'auto)
   (setq doom-modeline-persp-name nil)
   )
 
