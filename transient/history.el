@@ -19,9 +19,11 @@
   ("--rebase")
   nil)
  (magit-push
-  ("--force-with-lease"))
- (magit-rebase nil
-               ("--interactive"))
+  ("--force-with-lease")
+  nil)
+ (magit-rebase
+  ("--interactive")
+  nil)
  (magit-remote
   ("-f"))
  (magit-reset nil)
@@ -30,4 +32,5 @@
  (magit-stash
   ("--include-untracked")
   nil)
- (magit-tag nil))
+ (magit-tag
+  ("--annotate")))

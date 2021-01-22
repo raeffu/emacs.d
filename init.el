@@ -737,8 +737,10 @@ i.e. windows tiled side-by-side."
                           'magit-insert-unpushed-to-upstream
                           'magit-insert-unpushed-to-upstream-or-recent
                           'replace)
-  (global-git-commit-mode t)
-  )
+  (setq magit-section-initial-visibility-alist `((stashes . show)
+                                                 (unpulled . show)
+                                                 (unpushed . show)))
+  (global-git-commit-mode t))
 
 (use-package yaml-mode
   :ensure t
@@ -868,6 +870,43 @@ i.e. windows tiled side-by-side."
   (global-diff-hl-mode)
   (diff-hl-flydiff-mode))
 
+(use-package all-the-icons
+  :ensure t)
+
+;; (use-package doom-themes
+;;   :ensure t
+;;   :init (load-theme 'doom-one t)
+;;   (progn
+;;     (doom-themes-neotree-config)
+;;     (setq doom-neotree-line-spacing 0)
+;;     (doom-themes-org-config))
+;;   (custom-set-faces
+;;    `(hl-line ((t :background "#354A59")))
+;;    `(linum ((t :weight medium :slant normal :foreground "#bbc2cf" :background "#282c34")))
+;;    `(fringe ((t :foreground "#bbc2cf" :background "#23272e")))
+;;    `(magit-section-highlight ((t :background "#354A59")))
+;;    `(magit-diff-file-heading-highlight ((t :foreground "#c678dd" :background "#354A59")))
+;;    `(magit-diff-hunk-heading-highlight ((t :background "#354A59" :foreground "#a9a1e1")))
+;;    `(magit-diff-hunk-heading ((t :foreground "#a9a1e1")))
+;;    `(magit-diff-added ((t :background "#282c34")))
+;;    `(magit-diff-added-highlight ((t :background "#21242b" :weight normal)))
+;;    `(magit-diff-removed ((t :background "#282c34")))
+;;    `(magit-diff-removed-highlight ((t :background "#21242b" :weight normal)))
+;;    `(smerge-refined-removed ((t :foreground "#ff6c6b" :underline t)))
+;;    `(smerge-refined-added ((t :foreground "#98BE65" :underline t)))
+;;    `(smerge-markers ((t :foreground "#c678dd" :background "#354A59")))
+;;    `(helm-selection ((t :foreground "#51afef" :background "#2E4651" :underline t)))
+;;    `(company-preview ((t :foreground "#5B6268" :background "#21242b")))
+;;    `(tooltip ((t :foreground "#bbc2cf" :background "#23272e" :inverse-video nil)))
+;;    `(company-tooltip ((t :inherit 'tooltip :background nil)))
+;;    `(company-tooltip-selection ((t :weight bold :inverse-video nil :foreground "#8e908c" :background "#2257A0")))
+;;    `(region ((t :background "#2257A0")))
+;;    `(font-lock-comment-face ((t :foreground "#73797e")))
+;;    `(lazy-highlight ((t :background "#9a60ab")))
+;;    `(markdown-header-face ((t :foreground "#51afef")))
+;;    )
+;;   )
+
 (use-package doom-themes
   :ensure t
   :init (load-theme 'doom-one t)
@@ -875,41 +914,30 @@ i.e. windows tiled side-by-side."
     (doom-themes-neotree-config)
     (setq doom-neotree-line-spacing 0)
     (doom-themes-org-config))
-  (custom-set-faces
-   `(hl-line ((t :background "#354A59")))
-   `(linum ((t :weight medium :slant normal :foreground "#bbc2cf" :background "#282c34")))
-   `(fringe ((t :foreground "#bbc2cf" :background "#23272e")))
-   `(magit-section-highlight ((t :background "#354A59")))
-   `(magit-diff-file-heading-highlight ((t :foreground "#c678dd" :background "#354A59")))
-   `(magit-diff-hunk-heading-highlight ((t :background "#354A59" :foreground "#a9a1e1")))
-   `(magit-diff-hunk-heading ((t :foreground "#a9a1e1")))
-   `(magit-diff-added ((t :background "#282c34")))
-   `(magit-diff-added-highlight ((t :background "#21242b" :weight normal)))
-   `(magit-diff-removed ((t :background "#282c34")))
-   `(magit-diff-removed-highlight ((t :background "#21242b" :weight normal)))
-   `(smerge-refined-removed ((t :foreground "#ff6c6b" :underline t)))
-   `(smerge-refined-added ((t :foreground "#98BE65" :underline t)))
-   `(smerge-markers ((t :foreground "#c678dd" :background "#354A59")))
-   `(helm-selection ((t :foreground "#51afef" :background "#2E4651" :underline t)))
-   `(company-preview ((t :foreground "#5B6268" :background "#21242b")))
-   `(tooltip ((t :foreground "#bbc2cf" :background "#23272e" :inverse-video nil)))
-   `(company-tooltip ((t :inherit 'tooltip :background nil)))
-   `(company-tooltip-selection ((t :weight bold :inverse-video nil :foreground "#8e908c" :background "#2257A0")))
-   `(region ((t :background "#2257A0")))
-   `(font-lock-comment-face ((t :foreground "#73797e")))
-   `(lazy-highlight ((t :background "#9a60ab")))
-   `(markdown-header-face ((t :foreground "#51afef")))
-   )
+  :config
+  (let ((custom--inhibit-theme-enable nil))
+    (custom-theme-set-faces
+     'doom-one
+     '(helm-ff-file-extension ((t :foreground "#bbc2cf")))
+     '(helm-candidate-number ((t :foreground "#c678dd" :extend t)))
+     ))
   )
 
-;; (use-package doom-themes
-;;   :ensure t
-;;   :init (load-theme 'doom-one-light t)
-;;   (progn
-;;     (doom-themes-neotree-config)
-;;     (setq doom-neotree-line-spacing 0)
-;;     (doom-themes-org-config))
-;;   )
+(use-package doom-themes
+  :ensure t
+  :init (load-theme 'doom-one-light t)
+  (progn
+    (doom-themes-neotree-config)
+    (setq doom-neotree-line-spacing 0)
+    (doom-themes-org-config))
+  :config
+  (let ((custom--inhibit-theme-enable nil))
+    (custom-theme-set-faces
+     'doom-one-light
+     '(helm-ff-file-extension ((t :foreground "#383a42")))
+     '(js2-jsdoc-html-tag-name ((t :foreground "#da8548")))
+     ))
+  )
 
 (use-package doom-modeline
   :ensure t
