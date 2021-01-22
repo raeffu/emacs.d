@@ -58,8 +58,10 @@
 (global-unset-key (kbd "M->")) ; end-of-buffer
 (global-unset-key (kbd "M-h"))
 (global-unset-key (kbd "M-H"))
-(global-set-key (kbd "M-h") 'beginning-of-buffer)
-(global-set-key (kbd "M-H") 'end-of-buffer)
+(bind-keys*
+ ("M-h" . beginning-of-buffer)
+ ("M-H" . end-of-buffer)
+ )
 
 (global-unset-key (kbd "C-x 1")) ; delete-other-windows
 (global-unset-key (kbd "C-x 0")) ; delete-window

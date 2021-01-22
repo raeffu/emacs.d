@@ -669,13 +669,16 @@ i.e. windows tiled side-by-side."
   :mode (("\\.erb\\'" . web-mode)
          ("\\.mustache\\'" . web-mode)
          ("\\.html?\\'" . web-mode)
-         ("\\.eex\\'" . web-mode)
-         ("\\.php\\'" . web-mode))
+         ("\\.eex\\'" . web-mode))
   :config (progn
             (setq web-mode-markup-indent-offset 2
                   web-mode-css-indent-offset 2
                   web-mode-attr-indent-offset 2
                   web-mode-code-indent-offset 2)))
+
+(use-package php-mode
+  :ensure t
+  :mode (("\\.php\\'" . php-mode)))
 
 (use-package js2-mode
   :ensure t
@@ -798,7 +801,11 @@ i.e. windows tiled side-by-side."
 ;;   :ensure t)
 
 (use-package ess
- :ensure t)
+  :ensure t
+  :config
+  (add-hook 'ess-mode-hook 
+          (lambda () 
+            (ess-set-style 'RStudio))))
 
 (use-package csv-mode
   :ensure t)
@@ -870,6 +877,11 @@ i.e. windows tiled side-by-side."
   (global-diff-hl-mode)
   (diff-hl-flydiff-mode))
 
+(use-package vlf
+  :ensure t
+  :config
+  (require 'vlf-setup))
+
 (use-package all-the-icons
   :ensure t)
 
@@ -881,29 +893,30 @@ i.e. windows tiled side-by-side."
 ;;     (setq doom-neotree-line-spacing 0)
 ;;     (doom-themes-org-config))
 ;;   (custom-set-faces
-;;    `(hl-line ((t :background "#354A59")))
-;;    `(linum ((t :weight medium :slant normal :foreground "#bbc2cf" :background "#282c34")))
-;;    `(fringe ((t :foreground "#bbc2cf" :background "#23272e")))
-;;    `(magit-section-highlight ((t :background "#354A59")))
-;;    `(magit-diff-file-heading-highlight ((t :foreground "#c678dd" :background "#354A59")))
-;;    `(magit-diff-hunk-heading-highlight ((t :background "#354A59" :foreground "#a9a1e1")))
-;;    `(magit-diff-hunk-heading ((t :foreground "#a9a1e1")))
-;;    `(magit-diff-added ((t :background "#282c34")))
-;;    `(magit-diff-added-highlight ((t :background "#21242b" :weight normal)))
-;;    `(magit-diff-removed ((t :background "#282c34")))
-;;    `(magit-diff-removed-highlight ((t :background "#21242b" :weight normal)))
-;;    `(smerge-refined-removed ((t :foreground "#ff6c6b" :underline t)))
-;;    `(smerge-refined-added ((t :foreground "#98BE65" :underline t)))
-;;    `(smerge-markers ((t :foreground "#c678dd" :background "#354A59")))
-;;    `(helm-selection ((t :foreground "#51afef" :background "#2E4651" :underline t)))
-;;    `(company-preview ((t :foreground "#5B6268" :background "#21242b")))
-;;    `(tooltip ((t :foreground "#bbc2cf" :background "#23272e" :inverse-video nil)))
-;;    `(company-tooltip ((t :inherit 'tooltip :background nil)))
-;;    `(company-tooltip-selection ((t :weight bold :inverse-video nil :foreground "#8e908c" :background "#2257A0")))
-;;    `(region ((t :background "#2257A0")))
-;;    `(font-lock-comment-face ((t :foreground "#73797e")))
-;;    `(lazy-highlight ((t :background "#9a60ab")))
-;;    `(markdown-header-face ((t :foreground "#51afef")))
+;; `(hl-line ((t :background "#354A59")))
+;; `(linum ((t :weight medium :slant normal :foreground "#bbc2cf" :background "#282c34")))
+;; `(fringe ((t :foreground "#bbc2cf" :background "#23272e")))
+;; `(magit-section-highlight ((t :background "#354A59")))
+   ;; `(magit-diff-file-heading-highlight ((t :foreground "#c678dd" :background "#354A59")))
+   ;; `(magit-diff-hunk-heading-highlight ((t :background "#354A59" :foreground "#a9a1e1")))
+   ;; `(magit-diff-hunk-heading ((t :foreground "#a9a1e1")))
+   ;; `(magit-diff-added ((t :background "#282c34")))
+   ;; `(magit-diff-added-highlight ((t :background "#21242b" :weight normal)))
+   ;; `(magit-diff-removed ((t :background "#282c34")))
+   ;; `(magit-diff-removed-highlight ((t :background "#21242b" :weight normal)))
+   ;; `(smerge-refined-removed ((t :foreground "#ff6c6b" :underline t)))
+   ;; `(smerge-refined-added ((t :foreground "#98BE65" :underline t)))
+   ;; `(smerge-markers ((t :foreground "#c678dd" :background "#354A59")))
+   ;; `(helm-selection ((t (:inherit bold :background "#2E4651" :underline "#c678dd"))))
+   ;; `(helm-match ((t :foreground "#c678dd" :weight bold)))
+   ;; `(company-preview ((t :foreground "#5B6268" :background "#21242b")))
+   ;; `(tooltip ((t :foreground "#bbc2cf" :background "#23272e" :inverse-video nil)))
+   ;; `(company-tooltip ((t :inherit 'tooltip :background nil)))
+   ;; `(company-tooltip-selection ((t :weight bold :inverse-video nil :foreground "#8e908c" :background "#2257A0")))
+   ;; `(region ((t :background "#2257A0")))
+   ;; `(font-lock-comment-face ((t :foreground "#73797e")))
+   ;; `(lazy-highlight ((t :background "#9a60ab")))
+   ;; `(markdown-header-face ((t :foreground "#51afef")))
 ;;    )
 ;;   )
 
@@ -943,7 +956,7 @@ i.e. windows tiled side-by-side."
   :ensure t
   :init (doom-modeline-mode)
   :config
-  (setq doom-modeline-buffer-file-name-style 'auto)
+  (setq doom-modeline-buffer-file-name-style 'truncate-with-project)
   (setq doom-modeline-persp-name nil)
   )
 
