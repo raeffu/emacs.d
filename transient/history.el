@@ -33,5 +33,5 @@
  (magit-stash
   ("--include-untracked")
   nil)
- (magit-tag
-  ("--annotate")))
+ (magit-tag nil
+            ("--annotate")))

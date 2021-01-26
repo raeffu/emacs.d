@@ -17,10 +17,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ag-arguments '("--smart-case" "--stats" "--hidden"))
  '(ag-highlight-search t)
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
  '(async-bytecomp-package-mode t)
+ '(auto-dark-emacs/dark-theme-function 'raeffu-dark-mode)
+ '(auto-dark-emacs/light-theme-function 'raeffu-light-mode)
  '(blink-cursor-mode nil)
  '(c-basic-offset 2)
  '(company-dabbrev-char-regexp "\\sw\\|_")
@@ -62,10 +65,11 @@
  '(grep-find-ignored-directories
    '(".cask" "node_modules" "SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "tmp" "log"))
  '(grip-github-user "raeffu")
- '(helm-ag-fuzzy-match t)
- '(helm-ag-insert-at-point 'symbol)
+ '(helm-ag-fuzzy-match t t)
+ '(helm-ag-insert-at-point 'symbol t)
  '(helm-buffer-max-length nil)
  '(helm-buffers-fuzzy-matching t)
+ '(helm-completion-style 'emacs)
  '(helm-ff-file-name-history-use-recentf t)
  '(helm-ff-search-library-in-sexp t)
  '(helm-mode t)

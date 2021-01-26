@@ -345,7 +345,7 @@ i.e. windows tiled side-by-side."
   :bind ("M-p" . helm-projectile-ag)
   :commands (helm-ag helm-projectile-ag)
   :init (setq helm-ag-insert-at-point 'symbol
-              helm-ag-command-option "--path-to-ignore ~/.agignore"))
+              helm-ag-command-option "--path-to-ignore ~/.agignore --hidden"))
 
 (use-package helm-info
   :ensure helm
@@ -920,37 +920,50 @@ i.e. windows tiled side-by-side."
 ;;    )
 ;;   )
 
-(use-package doom-themes
-  :ensure t
-  :init (load-theme 'doom-one t)
-  (progn
-    (doom-themes-neotree-config)
-    (setq doom-neotree-line-spacing 0)
-    (doom-themes-org-config))
-  :config
-  (let ((custom--inhibit-theme-enable nil))
-    (custom-theme-set-faces
-     'doom-one
-     '(helm-ff-file-extension ((t :foreground "#bbc2cf")))
-     '(helm-candidate-number ((t :foreground "#c678dd" :extend t)))
-     ))
+(defun raeffu-dark-mode ()
+  "Doom one theme with custom settings."
+  (interactive)
+  (use-package doom-themes
+    :ensure t
+    :init (load-theme 'doom-one t)
+    (progn
+      (doom-themes-neotree-config)
+      (setq doom-neotree-line-spacing 0)
+      (doom-themes-org-config))
+    :config
+    (let ((custom--inhibit-theme-enable nil))
+      (custom-theme-set-faces
+       'doom-one
+       '(helm-ff-file-extension ((t :foreground "#bbc2cf")))
+       '(helm-candidate-number ((t :foreground "#c678dd" :extend t)))
+       '(widget-field ((t :background "#1B2229" :extend t)))
+       ))
+    )
   )
 
-(use-package doom-themes
-  :ensure t
-  :init (load-theme 'doom-one-light t)
-  (progn
-    (doom-themes-neotree-config)
-    (setq doom-neotree-line-spacing 0)
-    (doom-themes-org-config))
-  :config
-  (let ((custom--inhibit-theme-enable nil))
-    (custom-theme-set-faces
-     'doom-one-light
-     '(helm-ff-file-extension ((t :foreground "#383a42")))
-     '(js2-jsdoc-html-tag-name ((t :foreground "#da8548")))
-     ))
+(defun raeffu-light-mode ()
+  "Doom one light theme with custom settings."
+  (interactive)
+  (use-package doom-themes
+    :ensure t
+    :init (load-theme 'doom-one-light t)
+    (progn
+      (doom-themes-neotree-config)
+      (setq doom-neotree-line-spacing 0)
+      (doom-themes-org-config))
+    :config
+    (let ((custom--inhibit-theme-enable nil))
+      (custom-theme-set-faces
+       'doom-one-light
+       '(helm-ff-file-extension ((t :foreground "#383a42")))
+       '(js2-jsdoc-html-tag-name ((t :foreground "#da8548")))
+       '(widget-field ((t :background "#dfdfdf" :extend t)))
+       ))
+    )
   )
+
+(add-to-list 'load-path "~/.emacs.d/vendor/auto-dark-emacs/")
+(require 'auto-dark-emacs)
 
 (use-package doom-modeline
   :ensure t
