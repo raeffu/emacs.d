@@ -74,9 +74,6 @@
 (global-set-key (kbd "M-8") 'delete-other-windows-vertically)
 (global-set-key (kbd "M-+") 'balance-windows)
 
-;; Zoom-Window
-(global-set-key (kbd "M-1") 'zoom-window-zoom)
-
 (global-unset-key (kbd "M-x")) ; execute-extended-command
 (global-set-key (kbd "M-q") 'eshell)
 

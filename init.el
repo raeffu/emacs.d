@@ -442,12 +442,14 @@ i.e. windows tiled side-by-side."
   :ensure t
   :bind (("M-t" . helm-projectile-find-file)))
 
-(use-package zoom-window
+(use-package zoom
   :ensure t
   :config
-  (zoom-window-setup)
-  ;; (setq zoom-window-mode-line-color "#eab700") ;; color-theme-sanityinc-tomorrow
-  )
+  (custom-set-variables
+   '(zoom-mode t)
+   '(zoom-size '(0.618 . 0.618)))
+  :bind
+  (("M-1" . zoom)))
 
 (use-package yasnippet
   :ensure t
@@ -589,7 +591,24 @@ i.e. windows tiled side-by-side."
   :init
   (add-hook 'typescript-mode-hook 'maybe-use-prettier)
   (add-hook 'js2-mode-hook 'maybe-use-prettier)
+  (add-hook 'web-mode-hook 'maybe-use-prettier)
   )
+
+(setq exec-path (cons (expand-file-name "~/.rbenv/shims") exec-path))
+
+(use-package sass-mode
+  :ensure t
+  :mode (("\\.sass\\'" . sass-mode)
+         ("\\.scss\\'" . scss-mode)))
+
+(use-package scss-mode
+  :ensure t
+  :after rainbow-mode
+  :config
+  (autoload 'scss-mode "scss-mode")
+  (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+  (setq scss-compile-at-save nil))
+
 
 (use-package json-mode
   :ensure t
@@ -756,19 +775,6 @@ i.e. windows tiled side-by-side."
   :bind (:map emmet-mode-keymap
 	      ("M-e" . emmet-expand-line))
   :config (add-hook 'web-mode-hook 'emmet-mode))
-
-(setq exec-path (cons (expand-file-name "~/.rbenv/shims") exec-path))
-
-
-(use-package scss-mode
-  :ensure t
-  :mode "\\.scss\\'"
-  :init
-  (setq scss-compile-at-save nil))
-
-(use-package sass-mode
-  :ensure t
-  :mode "\\.sass\\'")
 
 (use-package whitespace-cleanup-mode
   :ensure t
@@ -969,7 +975,7 @@ i.e. windows tiled side-by-side."
   :ensure t
   :init (doom-modeline-mode)
   :config
-  (setq doom-modeline-buffer-file-name-style 'truncate-with-project)
+  (setq doom-modeline-buffer-file-name-style 'auto)
   (setq doom-modeline-persp-name nil)
   )
 
